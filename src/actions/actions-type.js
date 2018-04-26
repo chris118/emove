@@ -1,0 +1,1 @@
+export const HEADER_SIDER_TOOGGLE = 'SIDER_TOOGGLE';
