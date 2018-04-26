@@ -2,6 +2,7 @@
   "name": "emove",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://chris118.github.io/emove/",
   "dependencies": {
     "antd-mobile": "^2.1.8",
     "react": "^16.3.2",
@@ -12,10 +13,13 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
+    "gh-pages": "^1.1.0",
     "react-app-rewired": "^1.5.2"
   }
 }
