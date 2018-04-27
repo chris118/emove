@@ -1,6 +1,25 @@
-.root {
+.flex-container {
+  margin: 50px 10px 0px;
+}
+.input-item {
+  width: 100%;
+}
+.sub-title {
+  color: #888;
+  font-size: 14px;
+  padding: 0 0 10px 15px;
+}
+.verify-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 150px;
+}
+.verify-link {
+  color: #108ee9;
+  width: 150px;
+  line-height: 44px;
+  text-align: center;
+  background-color: #ffffff;
+  border-left: 1px solid #f5f5f9;
+}
+.verify-link:hover {
+  color: #222222;
 }
