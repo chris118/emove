@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import './index.css';
 import {
-  InputItem, Button, Toast,
-  WingBlank, WhiteSpace, List,
-  Flex } from 'antd-mobile';
+  InputItem, Button, WingBlank, WhiteSpace} from 'antd-mobile';
 
 class Login extends Component {
   constructor(props) {
@@ -41,6 +39,12 @@ class Login extends Component {
     }
   }
 
+  login = (event) => {
+    event.preventDefault();
+
+    this.props.history.replace('/');
+  }
+
   render() {
     return (
       <div className="flex-container">
@@ -71,7 +75,7 @@ class Login extends Component {
         <WhiteSpace size="lg" />
         <WhiteSpace size="lg" />
 
-        <Button type="primary">登录</Button>
+        <Button type="primary" onClick={this.login}>登录</Button>
       </div>
     );
   }
