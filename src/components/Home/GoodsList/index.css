@@ -1,20 +1,18 @@
-.am-stepper.showNumber{
+.am-stepper.showNumber {
   width: 120px;
 }
 .am-list-item .am-list-line .am-list-extra {
   text-overflow: unset;
 }
-
 .am-list-item .am-list-line .am-list-extra {
   flex-basis: auto;
   padding-top: 0px;
   padding-bottom: 0px;
 }
-
-.am-stepper-handler-down-disabled, .am-stepper-handler-up-disabled {
+.am-stepper-handler-down-disabled,
+.am-stepper-handler-up-disabled {
   opacity: 0;
 }
-
-.am-stepper.showNumber .am-stepper-input{
+.am-stepper.showNumber .am-stepper-input {
   opacity: 0;
 }
