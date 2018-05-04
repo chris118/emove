@@ -13,6 +13,3 @@
 .am-stepper-handler-up-disabled {
   opacity: 0;
 }
-.am-stepper.showNumber .am-stepper-input {
-  opacity: 0;
-}

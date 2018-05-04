@@ -20,18 +20,31 @@ class Home extends Component {
     this.loadData();
   }
 
-  rightDidMount = (node) => {
-    if (node) {
-      node.addEventListener('scroll', () => {
-        console.log("y: " + node.scrollTop)
+  componentDidMount() {
+    this.rightDiv.addEventListener('scroll', () => {
+      console.log("y: " + this.rightDiv.scrollTop)
 
-        // 由 react-redux 注入：
-        let { goodsIndexChanged } = this.props;
-        goodsIndexChanged(node.scrollTop)
+      // 由 react-redux 注入：
+      let { goodsIndexChanged } = this.props;
+      var index = 0;
+      if(this.rightDiv.scrollTop >= 44*11){
+        index = 1;
+      }
+      goodsIndexChanged(index)
+    });
+  }
 
-      });
+  componentWillReceiveProps(nextProps){
+    console.log("componentWillReceiveProps:  " + nextProps.index)
+    if(nextProps !== undefined){
+      if(nextProps.index === 0){
+        this.rightDiv.scrollTop = 0;
+      } if(nextProps.index === 1){
+        this.rightDiv.scrollTop = 44*11;
+      }
     }
-  };
+  }
+
 
   loadData() {
     data.push(  {
@@ -64,16 +77,23 @@ class Home extends Component {
   render() {
     return (
       <div className="Container">
-        {/*<div className="Left">*/}
-          {/*<CategoryList data={numbers}/>*/}
-        {/*</div>*/}
-        <div className="Right" ref={this.rightDidMount}>
+        <div className="Left">
+          <CategoryList data={numbers}/>
+        </div>
+        <div className="Right" ref={(right) => { this.rightDiv = right; }}>
           <GoodsList  data={data}/>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  // state === reducer
+  return {
+    index: state.goods_list.index, //Action出发改变
+  };
+};
 
 function mapDispatchToProps(dispatch) {
   //react-redux 注入 actions 到 this.props
@@ -83,4 +103,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

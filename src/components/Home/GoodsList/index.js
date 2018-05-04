@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {List, Stepper} from 'antd-mobile';
+import {List} from 'antd-mobile';
 import styled from 'styled-components';
-import IndexStepper from './index-stepper'
+import IndexStepper from '../../Common/Stepper'
 import './index.css';
 
 const Item = List.Item;

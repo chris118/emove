@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Stepper} from 'antd-mobile';
+import {throttle} from '../../../utils'
 import './index.css';
 
 class IndexStepper extends Component {
@@ -10,25 +11,11 @@ class IndexStepper extends Component {
     };
   }
 
-  throttle(fn, gapTime) {
-    if (gapTime == null || gapTime == undefined) {
-      gapTime = 1000
-    }
-
-    let _lastTime = null
-
-    // 返回新的函数
-    return function () {
-      let _nowTime = + new Date()
-      if (_nowTime - _lastTime > gapTime || !_lastTime) {
-        fn.apply(this, arguments)   //将this和参数传给原函数
-        _lastTime = _nowTime
-      }
-    }
+  componentDidMount() {
+    console.log(this.stepper.stepperRef.props.style)
   }
 
-  onChange = this.throttle((val) => {
-    console.log(val)
+  onChange = throttle((val) => {
     this.setState({
       val: val
     })
@@ -44,6 +31,7 @@ class IndexStepper extends Component {
         defaultValue={0}
         value={this.state.val}
         onChange={this.onChange}
+        ref={(stepper) => { this.stepper = stepper; }}
       />
     );
   }
