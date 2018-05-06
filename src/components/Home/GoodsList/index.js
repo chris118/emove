@@ -7,13 +7,9 @@ import './index.css';
 const Item = List.Item;
 
 const StyledItem = styled(Item) `
-    background: ${props => props.type === 1 ? 'grey' : 'white'};
+    background: ${props => props.type === 1 ? '#F2F2F2' : 'white'};
   `
 class GoodsList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const listItems = this.props.data.map((item, index) =>
       {

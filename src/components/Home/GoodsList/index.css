@@ -13,3 +13,9 @@
 .am-stepper-handler-up-disabled {
   opacity: 0;
 }
+.am-list-item {
+  padding-left: 0px;
+}
+.am-list-item .am-list-line .am-list-content {
+  padding-left: 15px;
+}

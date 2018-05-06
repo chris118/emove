@@ -1,18 +1,15 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {List} from 'antd-mobile';
 import GoodsList from './GoodsList';
 import CategoryList from './CategoryList'
 import {goodsIndexChanged} from '../../actions/goods_list_action'
 
 import './index.css';
 
-const Item = List.Item;
-
 //测试数据
 const data = []
-const numbers = [1, 2, 3, 4, 5 ,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25];
+const numbers = [];
 
 class Home extends Component {
 
@@ -22,8 +19,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.rightDiv.addEventListener('scroll', () => {
-      console.log("y: " + this.rightDiv.scrollTop)
-
       // 由 react-redux 注入：
       let { goodsIndexChanged } = this.props;
       var index = 0;
@@ -35,39 +30,65 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("componentWillReceiveProps:  " + nextProps.index)
-    if(nextProps !== undefined){
-      if(nextProps.index === 0){
-        this.rightDiv.scrollTop = 0;
-      } if(nextProps.index === 1){
-        this.rightDiv.scrollTop = 44*11;
-      }
+    console.log("componentWillReceiveProps:  " + nextProps.selected_index)
+    if(nextProps.selected_index === 0){
+      this.rightDiv.scrollTop = 0;
+    } if(nextProps.selected_index === 1){
+      this.rightDiv.scrollTop = 44*11;
     }
   }
 
 
   loadData() {
+    //category
+    numbers.push(  {
+      id: 100,
+      title: 'H1',
+      type: 1
+    })
+    for(var i = 1; i <= 5; i ++){
+      numbers.push({
+        id: i,
+        title: i,
+        type: 0
+      })
+    }
+
+    numbers.push(  {
+      id: 101,
+      title: 'H2',
+      type: 1
+    })
+    for(i = 1; i <= 20; i ++){
+      numbers.push({
+        id: i,
+        title: i,
+        type: 0
+      })
+    }
+
+    //goods
     data.push(  {
-      id: 0,
+      id: 100,
       title: 'Header1',
       type: 1
     })
-    for(var i = 1; i <= 10; i ++){
+    for(i = 1; i <= 10; i ++){
       data.push({
-        id: 1,
+        id: i,
         title: i,
         type: 0
       })
     }
 
     data.push(  {
-      id: 0,
+      id: 101,
       title: 'Header2',
       type: 1
     })
     for(i = 1; i <= 20; i ++){
       data.push({
-        id: 1,
+        id: i,
         title: i,
         type: 0
       })
@@ -91,7 +112,7 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   // state === reducer
   return {
-    index: state.goods_list.index, //Action出发改变
+    selected_index: state.goods_list.selected_index, //goodsIndexTapChanged触发改变，滚动到指定位置
   };
 };
 

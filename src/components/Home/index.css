@@ -15,7 +15,7 @@ WebKit inertia scrolling is being added here for any present/future devices that
 .Right {
   overflow: auto;
   height: auto;
-  padding: .5rem;
+  padding: 1px;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: none;
 }
