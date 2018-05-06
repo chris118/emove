@@ -1,0 +1,27 @@
+.cart-root {
+  display: flex;
+  flex-direction: row;
+  height: 80px;
+  background-color: white;
+  border-top: solid 1px #EAEA;
+}
+.cart-number {
+  width: 60px;
+  height: 60px;
+  background-color: #1071B9;
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+  border-radius: 60px;
+  z-index: 1000;
+  color: white;
+}
+.cart-btn {
+  width: 110px;
+  position: absolute;
+  right: 20px;
+  margin-top: 6px;
+}
+.cart-badge {
+  margin-left: 40px;
+}

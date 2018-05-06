@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import GoodsList from './GoodsList';
 import CategoryList from './CategoryList'
 import {goodsIndexChanged} from '../../actions/goods_list_action'
+import Cart from './Cart'
 
 import './index.css';
 
@@ -97,12 +98,17 @@ class Goods extends Component {
 
   render() {
     return (
-      <div className="Container">
-        <div className="Left">
-          <CategoryList data={numbers}/>
+      <div className="goods-root">
+        <div className="goods-content">
+          <div className="left">
+            <CategoryList data={numbers}/>
+          </div>
+          <div className="right" ref={(right) => { this.rightDiv = right; }}>
+            <GoodsList  data={data}/>
+          </div>
         </div>
-        <div className="Right" ref={(right) => { this.rightDiv = right; }}>
-          <GoodsList  data={data}/>
+        <div className="goods-cart">
+          <Cart/>
         </div>
       </div>
     );

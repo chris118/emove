@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+.minus {
+  margin-right: 5px;
+  background-color: #E1373E;
+  width: 30px;
+  height: 30px;
+  line-height: 24px;
+  color: white;
+  border-radius: 30px;
+  font-size: 28px;
+}
+.number_input {
+  margin-right: 5px;
+  width: 30px;
+  text-align: center;
+}
+.plus {
+  background-color: #1071B9;
+  width: 30px;
+  height: 30px;
+  line-height: 24px;
+  color: white;
+  border-radius: 30px;
+  font-size: 28px;
+}
