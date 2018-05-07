@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="824e6e4e-e82e-4ef8-b531-3f49014ed1fe" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/reducers/home.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/router/index.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/actions/goods_list_action.js" afterPath="$PROJECT_DIR$/src/actions/actions.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.js" afterPath="$PROJECT_DIR$/src/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/actions-type.js" afterPath="$PROJECT_DIR$/src/actions/actions-type.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Goods/Cart/index.css" afterPath="$PROJECT_DIR$/src/components/Goods/Cart/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Goods/Cart/index.less" afterPath="$PROJECT_DIR$/src/components/Goods/Cart/index.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Goods/CategoryList/index.js" afterPath="$PROJECT_DIR$/src/components/Goods/CategoryList/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Goods/index.js" afterPath="$PROJECT_DIR$/src/components/Goods/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Home/index.js" afterPath="$PROJECT_DIR$/src/components/Home/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/InfoEx/index.js" afterPath="$PROJECT_DIR$/src/components/InfoEx/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/index.js" afterPath="$PROJECT_DIR$/src/reducers/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Info/index.js" afterPath="$PROJECT_DIR$/src/components/Info/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -36,16 +25,6 @@
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="goods_list.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/reducers/goods_list.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="12" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -106,11 +85,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Goods/Cart/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="20" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="285">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/Info/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="157">
+              <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -183,7 +174,6 @@
         <option value="$PROJECT_DIR$/src/router/index.js" />
         <option value="$PROJECT_DIR$/src/components/Login/index.js" />
         <option value="$PROJECT_DIR$/src/components/Info/index.less" />
-        <option value="$PROJECT_DIR$/src/components/Info/index.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/actions/actions-type.js" />
         <option value="$PROJECT_DIR$/src/actions/actions.js" />
@@ -193,6 +183,7 @@
         <option value="$PROJECT_DIR$/src/components/Home/index.js" />
         <option value="$PROJECT_DIR$/src/components/Goods/Cart/index.less" />
         <option value="$PROJECT_DIR$/src/components/Goods/Cart/index.js" />
+        <option value="$PROJECT_DIR$/src/components/Info/index.js" />
       </list>
     </option>
   </component>
@@ -270,15 +261,7 @@
               <item name="emove" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Goods" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emove" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emove" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Goods" type="462c0819:PsiDirectoryNode" />
-              <item name="Cart" type="462c0819:PsiDirectoryNode" />
+              <item name="Info" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -338,7 +321,7 @@
       <workItem from="1524755350025" duration="2444000" />
       <workItem from="1524803474893" duration="13662000" />
       <workItem from="1524880205669" duration="12862000" />
-      <workItem from="1525654755156" duration="15035000" />
+      <workItem from="1525654755156" duration="16056000" />
     </task>
     <task id="LOCAL-00001" summary="login page">
       <created>1524802672867</created>
@@ -368,11 +351,18 @@
       <option name="project" value="LOCAL" />
       <updated>1525682877935</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="info page">
+      <created>1525689127152</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1525689127152</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54682000" />
+    <option name="totallyTimeSpent" value="55703000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="23" width="1375" height="837" extended-state="0" />
@@ -639,16 +629,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Info/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="11" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -781,8 +761,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Goods/Cart/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="20" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state relative-caret-position="285">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Info/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
