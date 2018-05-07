@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { List, InputItem, Button, WhiteSpace, WingBlank, TextareaItem } from 'antd-mobile';
+import {stepsIndexChanged} from '../../actions/actions';
 
 import './index.css';
 
@@ -7,6 +10,10 @@ const Item = List.Item;
 class Info extends Component {
   next = (event) => {
     event.preventDefault();
+
+    const {stepsIndexChanged} = this.props
+    stepsIndexChanged(1)
+
     this.props.history.replace('/app/goods');
   }
   render() {
@@ -38,4 +45,11 @@ class Info extends Component {
     );
   }
 }
-export default Info;
+
+function mapDispatchToProps(dispatch) {
+  return {
+    stepsIndexChanged: bindActionCreators(stepsIndexChanged, dispatch),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Info);

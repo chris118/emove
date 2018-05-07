@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Route, Switch } from 'react-router-dom';
-import { Steps, WingBlank, WhiteSpace } from 'antd-mobile';
+import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { Steps } from 'antd-mobile';
 import Goods from '../Goods';
 import Info from '../Info';
 import InfoEx from '../InfoEx';
@@ -27,7 +28,7 @@ class Home extends Component {
     return (
       <div className="home-container">
         <div className="steps">
-          <Steps current={0} direction="horizontal" size="small">{steps}</Steps>
+          <Steps current={this.props.step_index} direction="horizontal" size="small">{steps}</Steps>
         </div>
         <div className="content">
           <Switch>
@@ -40,4 +41,12 @@ class Home extends Component {
     );
   }
 }
-export default Home;
+
+const mapStateToProps = (state) => {
+  // state === reducer
+  return {
+    step_index: state.home.index,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

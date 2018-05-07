@@ -1,2 +1,3 @@
 export const GOODS_LIST_INDEX = 'GOODS_LIST_INDEX';
 export const GOODS_LIST_TAP_INDEX = 'GOODS_LIST_TAP_INDEX';
+export const STEPS_INDEX = 'STEPS_INDEX';

@@ -3,7 +3,7 @@ import {List} from 'antd-mobile';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import styled from 'styled-components';
-import {goodsIndexTapChanged} from '../../../actions/goods_list_action'
+import {goodsIndexTapChanged} from '../../../actions/actions'
 
 import './index.css';
 

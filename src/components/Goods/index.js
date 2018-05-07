@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import GoodsList from './GoodsList';
 import CategoryList from './CategoryList'
-import {goodsIndexChanged} from '../../actions/goods_list_action'
+import {goodsIndexChanged} from '../../actions/actions'
 import Cart from './Cart'
 
 import './index.css';
