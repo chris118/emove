@@ -6,7 +6,7 @@ import authHOC from '../components/AuthHOC';
 
 export const routers = (
     <Switch>
-        <Route exact path='/' component={authHOC(Home)}/>
+        <Route exact path='/app' component={authHOC(Home)}/>
         <Route path='/login' component={authHOC(Login)}/>
     </Switch>
 );

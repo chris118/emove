@@ -42,7 +42,7 @@ class Login extends Component {
   login = (event) => {
     event.preventDefault();
 
-    this.props.history.replace('/');
+    this.props.history.replace('/app');
   }
 
   render() {
