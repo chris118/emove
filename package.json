@@ -5,6 +5,7 @@
   "homepage": "https://chris118.github.io/emove/",
   "dependencies": {
     "antd-mobile": "^2.1.8",
+    "rc-form": "^2.2.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
