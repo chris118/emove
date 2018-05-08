@@ -27,9 +27,9 @@ class Home extends Component {
   render() {
     return (
       <div className="home-container">
-        <div className="steps">
-          <Steps current={this.props.step_index} direction="horizontal" size="small">{steps}</Steps>
-        </div>
+        {/*<div className="steps">*/}
+          {/*<Steps current={this.props.step_index} direction="horizontal" size="small">{steps}</Steps>*/}
+        {/*</div>*/}
         <div className="content">
           <Switch>
             <Route path={`${this.props.match.path}`} exact component={Info} />
