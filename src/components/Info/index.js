@@ -37,10 +37,42 @@ class Info extends Component {
     };
   }
 
+  componentDidMount(){
+    this.initMap();
+  }
+
+
   next = (event) => {
     event.preventDefault();
 
     this.props.history.replace('/app/infoex');
+  }
+
+  initMap() {
+    let map = this.map = new BMap.Map("allmap");
+    map.centerAndZoom("上海", 12);
+
+    var out_ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+      {
+        "input": "moveout",
+        "location": map
+      });
+    var in_ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+      {
+        "input": "movein",
+        "location": map
+      });
+
+    out_ac.addEventListener('onconfirm', (e) => {
+      var _value = e.item.value;
+      let start_value = _value.province + _value.city + _value.district + _value.street + _value.business;
+
+    });
+
+    in_ac.addEventListener('onconfirm', (e) => {
+      var _value = e.item.value;
+      let end_value = _value.province + _value.city + _value.district + _value.street + _value.business;
+    });
   }
 
   render() {
@@ -48,7 +80,8 @@ class Info extends Component {
     return (
       <div className="info-container">
         <List renderHeader={() => '请在下方填写您的搬出地址'}>
-          <InputItem placeholder="请在此填写您的搬出地址">搬出地址</InputItem>
+          <div id='allmap'></div>
+          <InputItem placeholder="请在此填写您的搬出地址" id="moveout">搬出地址</InputItem>
           <Picker
             data={elevators}
             cols={1}
