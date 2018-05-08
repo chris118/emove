@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { List, InputItem, Button, WhiteSpace, WingBlank, Picker } from 'antd-mobile';
 // import { createForm } from 'rc-form';
+import BMap from 'BMap'
 
 import './index.css';
 
