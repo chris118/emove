@@ -33,7 +33,7 @@ class Home extends Component {
         <div className="content">
           <Switch>
             <Route path={`${this.props.match.path}`} exact component={Info} />
-            <Route path={`${this.props.match.path}/infoex`} exact component={InfoEx} />
+            <Route path={`${this.props.match.path}/infoex`} component={InfoEx} />
             <Route path={`${this.props.match.path}/goods`} component={Goods} />
           </Switch>
         </div>
