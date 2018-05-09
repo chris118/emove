@@ -43,6 +43,7 @@ class Info extends Component {
       assemble_out: [0],
 
       address_in: "",
+      address_in_selected: false,
       elevator_in: [1],
       floor_in: [1],
       assemble_in: [0],
@@ -50,7 +51,7 @@ class Info extends Component {
   }
 
   componentDidMount() {
-    this.initMap(this);
+    this.initMap();
   }
 
 
@@ -60,7 +61,7 @@ class Info extends Component {
     this.props.history.replace('/app/infoex');
   }
 
-  initMap(_this) {
+  initMap() {
     let map = this.map = new BMap.Map("allmap");
     map.centerAndZoom("上海", 12);
 
@@ -75,17 +76,24 @@ class Info extends Component {
         "location": map
       });
 
+    // let _this = this;
     out_ac.addEventListener('onconfirm', (e) => {
       var _value = e.item.value;
-      console.log(_value)
-      console.log(_this)
       let start_value = _value.province + _value.city + _value.district + _value.street + _value.business;
-      this.setState({address_out_selected: true})
+      this.setState({
+        address_out_selected: true,
+        address_out: start_value
+      })
+
     });
 
     in_ac.addEventListener('onconfirm', (e) => {
       var _value = e.item.value;
       let end_value = _value.province + _value.city + _value.district + _value.street + _value.business;
+      this.setState({
+        address_in_selected: true,
+        address_in: end_value
+      })
     });
   }
 
@@ -133,14 +141,21 @@ class Info extends Component {
           <InputItem
             placeholder="请在此填写您的搬出地址"
             id="moveout"
-            onChange={(v) => { this.setState({address_out: v}) }}
+            onChange={(v) => {
+              this.setState({
+                address_out: v,
+                address_out_selected: false,
+              })}
+            }
+            value={this.state.address_out}
             onBlur={(v) => {
-              console.log(this.state.address_out_selected)
               if(this.state.address_out_selected === false){
-                this.setState({address_out: ""})
+                this.setState({
+                  address_out: ""
+                })
               }
             }}
-            value={this.state.address_out}>
+            >
             搬出地址
           </InputItem>
           <Picker
@@ -167,7 +182,25 @@ class Info extends Component {
 
         {/*搬入*/}
         <List renderHeader={() => '请在下方填写您的搬入地址'}>
-          <InputItem placeholder="请在此填写您的搬入地址" id="movein">搬入地址</InputItem>
+          <InputItem
+            placeholder="请在此填写您的搬入地址"
+            id="movein"
+            onChange={(v) => {
+              this.setState({
+                address_in: v,
+                address_in_selected: false,
+              })}
+            }
+            value={this.state.address_in}
+            onBlur={(v) => {
+              if(this.state.address_in_selected === false){
+                this.setState({
+                  address_in: ""
+                })
+              }
+            }}>
+            搬入地址
+          </InputItem>
           <Picker
             data={elevators}
             cols={1}

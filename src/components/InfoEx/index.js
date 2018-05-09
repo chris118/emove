@@ -1,13 +1,36 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { List, InputItem, Button, WhiteSpace, WingBlank, TextareaItem } from 'antd-mobile';
+import { List, InputItem, Button, WhiteSpace, WingBlank, TextareaItem, DatePicker, Picker } from 'antd-mobile';
 import {stepsIndexChanged} from '../../actions/actions';
 
 import './index.css';
 
 const Item = List.Item;
+const invoices = [
+  {
+    label: '是',
+    value: 1,
+  },
+  {
+    label: '否',
+    value: 0,
+  },
+];
+
 class Info extends Component {
+  constructor(props) {
+    super(props);
+
+    const nowTimeStamp = Date.now();
+    const now = new Date(nowTimeStamp);
+
+    this.state = {
+      date: now,
+      invoice: [0]
+    };
+  }
+
   next = (event) => {
     event.preventDefault();
 
@@ -18,9 +41,19 @@ class Info extends Component {
   }
   render() {
     return (
-      <div className="info-container">
+      <div className="infoex-container">
+        <div className="infoex-header">欢迎使用e搬家微信服务号在线下单功能!</div>
+
         <List renderHeader={() => '请在下方选择您希望的搬家时间'}>
-          <Item extra="2018-01-01" arrow="horizontal" onClick={() => {}}>选择时间</Item>
+          <DatePicker
+            mode="date"
+            title="Select Date"
+            extra="Optional"
+            value={this.state.date}
+            onChange={date => this.setState({ date })}
+          >
+            <List.Item arrow="horizontal">Date</List.Item>
+          </DatePicker>
         </List>
         <List renderHeader={() => '请在下方填写负责人的联系方式'}>
           <InputItem placeholder="请在此填写负责人姓名">负责人</InputItem>
@@ -33,9 +66,15 @@ class Info extends Component {
           />
         </List>
         <WhiteSpace/>
-        <List>
-          <Item extra="否" arrow="horizontal" onClick={() => {}}>是否需要发票</Item>
-        </List>
+        <Picker
+          data={invoices}
+          cols={1}
+          value={this.state.invoice}
+          onChange={v => this.setState({invoice: v})}
+          onOk={v => this.setState({invoice: v})}
+        >
+          <List.Item arrow="horizontal">是否需要发票</List.Item>
+        </Picker>
         <WhiteSpace size="xl"/>
 
         <WingBlank>
