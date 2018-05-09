@@ -7,12 +7,12 @@ body {
   flex-direction: column;
 }
 .goods-cart {
-  height: 80px;
+  z-index: 1000;
 }
 /*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place and padded with negative margin and padding*/
 .goods-content {
   display: flex;
-  height: 78vh;
+  height: 83vh;
   width: 100%;
 }
 /*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
