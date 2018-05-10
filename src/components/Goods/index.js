@@ -5,14 +5,21 @@ import GoodsList from './GoodsList';
 import CategoryList from './CategoryList'
 import {goodsIndexChanged} from '../../actions/actions'
 import Cart from './Cart'
+import Modal from '../Common/Modal';
 
 import './index.css';
 
 //测试数据
 const data = []
 const numbers = [];
+const cart_data = []
 
 class Goods extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { isOpen: false };
+  }
 
   componentWillMount() {
     this.loadData();
@@ -94,6 +101,27 @@ class Goods extends Component {
         type: 0
       })
     }
+
+    for(i = 1; i <= 4; i ++){
+      cart_data.push({
+        id: i,
+        title: i,
+        type: 0
+      })
+    }
+  }
+
+  onPrevious = (event) => {
+    this.props.history.replace('/app/infoex');
+  }
+
+  onNext = (event) => {
+  }
+
+  onCartClick = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
   }
 
   render() {
@@ -107,9 +135,13 @@ class Goods extends Component {
             <GoodsList  data={data}/>
           </div>
         </div>
-        <div className="goods-cart">
-          <Cart/>
+        <div className="goods-cart" style={{visibility: this.state.isOpen?'hidden':'visible'}} >
+          <Cart onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
         </div>
+        <Modal show={this.state.isOpen}
+               onClose={this.toggleModal}>
+          <Cart onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
+        </Modal>
       </div>
     );
   }

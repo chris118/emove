@@ -1,12 +1,10 @@
-.info-tips {
-  text-align: center;
-  margin-top: 10px;
-  color: #D8D8D8;
-}
 .infoex-header {
   height: 90px;
   background-color: #0F8EE9;
   color: white;
   text-align: center;
   line-height: 90px;
+}
+.infoex-navibar {
+  background-color: white;
 }

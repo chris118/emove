@@ -1,11 +1,11 @@
-@import "../../../base.less";
+@import "../../../static/css/base.less";
 
 .cart-root {
   display: flex;
   flex-direction: column;
-  height: 140px;
+  height: auto;
   background-color: white;
-  border-top: solid 1px #bbba;
+  border-top: solid 0.5px #bbba;
 }
 
 .cart-top {
@@ -15,24 +15,25 @@
 }
 
 .cart-bottom {
+  border-top: solid 0.5px #bbba;
   height: 80px;
 }
 
-.cart-number {
+.cart-number{
   width: 70px;
   height: 70px;
   border-radius: 70px;
-  background-color: @theme-color;
-
-  color: white;
+  background-color: #0F8EE9;
   float: left;
   margin-left: 30px;
   margin-top: -20px;
+  text-align: center;
+  line-height: 7;
 }
 
 .cart-badge {
-  margin-left: 50px;
-  margin-top: -40px;
+  margin-left: 30px;
+  margin-top: -290px;
 }
 
 .cart-info {
@@ -43,5 +44,14 @@
   color: @theme-color;
   font-size: 24px;
   margin-left: 10px;
+}
+
+.cart-info-number-second {
+  margin-left: 2px;
+}
+
+.cart-items {
+  height: 240px;
+  background-color: olivedrab;
 }
 
