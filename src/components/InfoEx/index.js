@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { List, InputItem, Button, WhiteSpace, WingBlank, TextareaItem, DatePicker, Picker } from 'antd-mobile';
-import {stepsIndexChanged} from '../../actions/actions';
+import { List, InputItem, WhiteSpace, TextareaItem, DatePicker, Picker } from 'antd-mobile';
+import NaviBar from '../Common/NaviBar';
 
 import './index.css';
 
-const Item = List.Item;
 const invoices = [
   {
     label: '是',
@@ -31,14 +29,14 @@ class Info extends Component {
     };
   }
 
-  next = (event) => {
-    event.preventDefault();
+  onPrevious = () => {
+    this.props.history.replace('/app');
+  }
 
-    const {stepsIndexChanged} = this.props
-    stepsIndexChanged(1)
-
+  onNext = () => {
     this.props.history.replace('/app/goods');
   }
+
   render() {
     return (
       <div className="infoex-container">
@@ -77,9 +75,9 @@ class Info extends Component {
         </Picker>
         <WhiteSpace size="xl"/>
 
-        <WingBlank>
-          <Button type="primary" onClick={this.next}>下一步</Button>
-        </WingBlank>
+        <div className="infoex-navibar">
+          <NaviBar onPrevious={this.onPrevious} onNext={this.onNext}/>
+        </div>
       </div>
     );
   }
@@ -87,7 +85,6 @@ class Info extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    stepsIndexChanged: bindActionCreators(stepsIndexChanged, dispatch),
   }
 }
 

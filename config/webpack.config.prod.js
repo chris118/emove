@@ -156,6 +156,12 @@ module.exports = {
               compact: true,
             },
           },
+          {
+            test: /\.(svg)$/i, loader: 'svg-sprite-loader', include: [
+            require.resolve('antd-mobile').replace(/warn\.js$/, ''),  // 1. 属于 antd-mobile 内置 svg 文件
+            path.resolve(paths.appSrc, 'static/images'),  // 自己私人的 svg 存放目录
+          ]
+          },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.

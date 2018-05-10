@@ -5,6 +5,8 @@ import GoodsList from './GoodsList';
 import CategoryList from './CategoryList'
 import {goodsIndexChanged} from '../../actions/actions'
 import Cart from './Cart'
+import CartGoods from './CartGoods'
+import Modal from '../Common/Modal';
 
 import './index.css';
 
@@ -13,6 +15,11 @@ const data = []
 const numbers = [];
 
 class Goods extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { isOpen: false };
+  }
 
   componentWillMount() {
     this.loadData();
@@ -96,6 +103,25 @@ class Goods extends Component {
     }
   }
 
+  onPrevious = (event) => {
+    this.props.history.replace('/app/infoex');
+  }
+
+  onNext = (event) => {
+  }
+
+  onCartClick = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
+  onModalHide = () => {
+    this.setState({
+      isOpen: false
+    });
+  }
+
   render() {
     return (
       <div className="goods-root">
@@ -107,9 +133,12 @@ class Goods extends Component {
             <GoodsList  data={data}/>
           </div>
         </div>
-        <div className="goods-cart">
-          <Cart/>
+        <div className="goods-cart" style={{visibility: this.state.isOpen?'hidden':'visible'}} >
+          <Cart onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
         </div>
+        <Modal show={this.state.isOpen} onHide={this.onModalHide}>
+          <CartGoods onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
+        </Modal>
       </div>
     );
   }

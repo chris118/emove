@@ -1,0 +1,7 @@
+.cartgoods-root {
+  display: flex;
+  flex-direction: column;
+}
+.cartgoods-list {
+  max-height: 600px;
+}
