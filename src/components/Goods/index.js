@@ -5,6 +5,7 @@ import GoodsList from './GoodsList';
 import CategoryList from './CategoryList'
 import {goodsIndexChanged} from '../../actions/actions'
 import Cart from './Cart'
+import CartGoods from './CartGoods'
 import Modal from '../Common/Modal';
 
 import './index.css';
@@ -12,7 +13,6 @@ import './index.css';
 //测试数据
 const data = []
 const numbers = [];
-const cart_data = []
 
 class Goods extends Component {
   constructor(props) {
@@ -101,14 +101,6 @@ class Goods extends Component {
         type: 0
       })
     }
-
-    for(i = 1; i <= 4; i ++){
-      cart_data.push({
-        id: i,
-        title: i,
-        type: 0
-      })
-    }
   }
 
   onPrevious = (event) => {
@@ -140,7 +132,7 @@ class Goods extends Component {
         </div>
         <Modal show={this.state.isOpen}
                onClose={this.toggleModal}>
-          <Cart onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
+          <CartGoods onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
         </Modal>
       </div>
     );

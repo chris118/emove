@@ -4,6 +4,7 @@
   height: auto;
   background-color: white;
   border-top: solid 0.5px #bbba;
+  z-index: 1000;
 }
 .cart-top {
   height: 60px;
@@ -12,7 +13,7 @@
 }
 .cart-bottom {
   border-top: solid 0.5px #bbba;
-  height: 80px;
+  height: auto;
 }
 .cart-number {
   width: 70px;

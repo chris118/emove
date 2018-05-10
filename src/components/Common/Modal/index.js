@@ -8,7 +8,6 @@ class Modal extends React.Component {
     if(!this.props.show) {
       return null;
     }
-
     return (
       <div className="backdrop">
         <div className="modal">
