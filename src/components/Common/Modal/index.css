@@ -4,8 +4,15 @@
   bottom: 0px;
   left: 0px;
   right: 0px;
-  background-color: rgba(0, 0, 0, 0.3);
   z-index: 1;
+}
+@keyframes show {
+  from {
+    transform: translateY(300px);
+  }
+  to {
+    transform: translateY(0px);
+  }
 }
 .modal {
   background-color: #ffffff;
@@ -15,5 +22,11 @@
   left: 0px;
   right: 0px;
   height: auto;
-  transition: 1s;
+  z-index: 1000;
+  animation: show 200ms;
+}
+.mask {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
 }

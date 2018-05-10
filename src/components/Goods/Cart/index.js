@@ -44,7 +44,7 @@ class Cart extends Component {
            <CustomIcon type={require('../../../static/images/cart.svg')} size="lg" onClick={this.onCartClick}/>
             <Badge className="cart-badge" text={77}  />
           </span>
-          <div className="cart-info">您当前所选物体的总体积</div>
+          {/*<div className="cart-info">您当前所选物体的总体积</div>*/}
           <div className="cart-info-number">{this.state.bulk}</div>
           <div className="cart-info-number cart-info-number-second">m³</div>
         </div>

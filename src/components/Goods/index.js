@@ -116,6 +116,12 @@ class Goods extends Component {
     });
   }
 
+  onModalHide = () => {
+    this.setState({
+      isOpen: false
+    });
+  }
+
   render() {
     return (
       <div className="goods-root">
@@ -130,8 +136,7 @@ class Goods extends Component {
         <div className="goods-cart" style={{visibility: this.state.isOpen?'hidden':'visible'}} >
           <Cart onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
         </div>
-        <Modal show={this.state.isOpen}
-               onClose={this.toggleModal}>
+        <Modal show={this.state.isOpen} onHide={this.onModalHide}>
           <CartGoods onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
         </Modal>
       </div>
