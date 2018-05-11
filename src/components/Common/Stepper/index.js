@@ -12,11 +12,19 @@ class Stepper extends Component {
     }
   }
 
+  componentWillMount() {
+    this.setState({
+      number: this.props.number
+    })
+  }
+
   plus = (event) => {
     event.preventDefault();
     this.setState({
       number: this.state.number + 1
     })
+
+    this.props.numberChanged(this.state.number + 1)
   }
 
   minus = (event) => {
@@ -24,6 +32,7 @@ class Stepper extends Component {
     this.setState({
       number: this.state.number - 1
     })
+    this.props.numberChanged(this.state.number - 1)
   }
 
   render() {
@@ -31,7 +40,7 @@ class Stepper extends Component {
     let number_input = null;
     if(this.state.number > 0){
       minus_button =  <Button className="minus" onClick={this.minus}>-</Button>
-      number_input =  <input className="number_input" value={this.state.number}/>
+      number_input =  <input readOnly={true} className="number_input" value={this.state.number}/>
 
     }
     return (

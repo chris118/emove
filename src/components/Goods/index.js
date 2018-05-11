@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import GoodsList from './GoodsList';
 import CategoryList from './CategoryList'
-import {goodsIndexChanged} from '../../actions/actions'
+import {goodsIndexChanged, addChart} from '../../actions/actions'
 import Cart from './Cart'
 import CartGoods from './CartGoods'
 import Modal from '../Common/Modal';
@@ -18,7 +18,9 @@ class Goods extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isOpen: false };
+    this.state = {
+      isOpen: false,
+    };
   }
 
   componentWillMount() {
@@ -81,11 +83,12 @@ class Goods extends Component {
       title: 'Header1',
       type: 1
     })
-    for(i = 1; i <= 10; i ++){
+    for(i = 1; i <= 5; i ++){
       data.push({
         id: i,
         title: i,
-        type: 0
+        type: 0,
+        number: 1
       })
     }
 
@@ -96,11 +99,21 @@ class Goods extends Component {
     })
     for(i = 1; i <= 20; i ++){
       data.push({
-        id: i,
-        title: i,
-        type: 0
+        id: i+ 10 ,
+        title: i+ 10,
+        type: 0,
+        number: 0
       })
     }
+
+    var items = data.filter((item) => {
+      return  item.number > 0 && item.type === 0;
+    });
+
+    let { addChart } = this.props;
+    items.map((item)=> {
+      return addChart(item)
+    })
   }
 
   onPrevious = (event) => {
@@ -114,30 +127,44 @@ class Goods extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
+
+    //禁止滚动
+    this.rightDiv.style.overflow = 'hidden'
+    this.leftDiv.style.overflow = 'hidden'
+
   }
 
   onModalHide = () => {
     this.setState({
       isOpen: false
     });
+
+    //恢复滚动
+    this.rightDiv.style.overflow = 'auto'
+    this.leftDiv.style.overflow = 'auto'
+  }
+
+  numberChanged = (newItem) => {
+    let { addChart } = this.props;
+    addChart(newItem)
   }
 
   render() {
     return (
       <div className="goods-root">
         <div className="goods-content">
-          <div className="left">
+          <div className="left" ref={(left) => { this.leftDiv = left; }}>
             <CategoryList data={numbers}/>
           </div>
           <div className="right" ref={(right) => { this.rightDiv = right; }}>
-            <GoodsList  data={data}/>
+            <GoodsList numberChanged={this.numberChanged}  data={data}/>
           </div>
         </div>
         <div className="goods-cart" style={{visibility: this.state.isOpen?'hidden':'visible'}} >
           <Cart onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
         </div>
         <Modal show={this.state.isOpen} onHide={this.onModalHide}>
-          <CartGoods onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
+          <CartGoods  onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
         </Modal>
       </div>
     );
@@ -156,6 +183,8 @@ function mapDispatchToProps(dispatch) {
   // 不需要store.dispatch, 解耦store
   return {
     goodsIndexChanged: bindActionCreators(goodsIndexChanged, dispatch),
+    addChart: bindActionCreators(addChart, dispatch),
+
   }
 }
 

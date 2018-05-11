@@ -5,8 +5,6 @@ const initialState = {
 };
 
 export default function goods_list(state = initialState, action = {}) {
-  console.log(action)
-
   switch (action.type){
     case GOODS_LIST_INDEX:
       return Object.assign({}, state, { index: action.payload.index });

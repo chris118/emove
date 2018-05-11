@@ -10,13 +10,27 @@ const StyledItem = styled(Item) `
     background: ${props => props.type === 1 ? '#F2F2F2' : 'white'};
   `
 class GoodsList extends Component {
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      number: 0
+    }
+  }
+
+  numberChanged = (number, item) => {
+    let newItem = Object.assign(item, {number: number})
+    this.props.numberChanged(newItem)
+  }
+
   render() {
     const listItems = this.props.data.map((item, index) =>
       {
         if(item.type === 0 ){
         return <StyledItem type={item.type} key={index}
                       extra={
-                        <IndexStepper/>}>
+                        <IndexStepper number={item.number} numberChanged={(number) => this.numberChanged(number, item)}/>}>
             {item.title}
           </StyledItem>
         }else{ //header
