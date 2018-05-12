@@ -14,15 +14,14 @@ const StyledItem = styled(Item) `
     background: ${props => props.type === 1 ? '#F2F2F2' : 'white'};
   `
 class GoodsList extends Component {
-
+  componentWillReceiveProps(nextProps) {
+    console.log("componentWillReceiveProps")
+  }
   updateDataWithChart = () => {
     this.props.data.map((item) => {
       this.props.chart_items.forEach((char_item) => {
-        // console.log(char_item)
-        // console.log(item)
         if(char_item.id === item.id){
-          let newItem = Object.assign(item, {number: char_item.number})
-          return newItem
+          item.number = char_item.number
         }
       })
     })
@@ -30,16 +29,14 @@ class GoodsList extends Component {
 
   numberChanged = (number, item) => {
     let newItem = Object.assign(item, {number: number})
-    // console.log("newItem", newItem)
-    this.props.numberChanged(newItem)
-    // let { addChart } = this.props;
-    // addChart(newItem)
+    let { addChart } = this.props;
+    addChart(newItem)
   }
 
   render() {
-    this.updateDataWithChart()
-    // console.log(this.props.data)
+    console.log("render")
 
+    this.updateDataWithChart()
     const listItems = this.props.data.map((item, index) =>
       {
         if(item.type === 0 ){

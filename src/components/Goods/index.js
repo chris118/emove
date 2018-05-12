@@ -112,6 +112,7 @@ class Goods extends Component {
       })
     }
 
+    console.log('setstate', data)
     this.setState({
       data: data
     })
@@ -148,12 +149,9 @@ class Goods extends Component {
     //恢复滚动
     this.rightDiv.style.overflow = 'auto'
     this.leftDiv.style.overflow = 'auto'
-  }
 
-  numberChanged = (newItem) => {
-    console.log(newItem)
-    let { addChart } = this.props;
-    addChart(newItem)
+    data = []
+    this.loadData();
   }
 
   render() {
@@ -164,7 +162,7 @@ class Goods extends Component {
             <CategoryList data={categories}/>
           </div>
           <div className="right" ref={(right) => { this.rightDiv = right; }}>
-            <GoodsList numberChanged={this.numberChanged}  data={this.state.data}/>
+            <GoodsList  data={this.state.data}/>
           </div>
         </div>
         <div className="goods-cart" style={{visibility: this.state.isOpen?'hidden':'visible'}} >
