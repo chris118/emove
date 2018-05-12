@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Badge} from 'antd-mobile';
 import NaviBar from '../../Common/NaviBar';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {addChart} from '../../../actions/actions'
 
 import './index.css';
 
@@ -84,4 +86,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Cart);
+function mapDispatchToProps(dispatch) {
+  return {
+    addChart: bindActionCreators(addChart, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+
+// export default connect(mapStateToProps, null)(Cart);

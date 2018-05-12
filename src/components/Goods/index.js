@@ -11,14 +11,16 @@ import Modal from '../Common/Modal';
 import './index.css';
 
 //测试数据
-const data = []
-const numbers = [];
+const categories = []
+let data = []
+let chart_data = []
 
 class Goods extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      data: [],
       isOpen: false,
     };
   }
@@ -40,7 +42,6 @@ class Goods extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("componentWillReceiveProps:  " + nextProps.selected_index)
     if(nextProps.selected_index === 0){
       this.rightDiv.scrollTop = 0;
     } if(nextProps.selected_index === 1){
@@ -51,26 +52,26 @@ class Goods extends Component {
 
   loadData() {
     //category
-    numbers.push(  {
+    categories.push(  {
       id: 100,
       title: 'H1',
       type: 1
     })
     for(var i = 1; i <= 5; i ++){
-      numbers.push({
+      categories.push({
         id: i,
         title: i,
         type: 0
       })
     }
 
-    numbers.push(  {
+    categories.push(  {
       id: 101,
       title: 'H2',
       type: 1
     })
     for(i = 1; i <= 20; i ++){
-      numbers.push({
+      categories.push({
         id: i,
         title: i,
         type: 0
@@ -88,6 +89,12 @@ class Goods extends Component {
         id: i,
         title: i,
         type: 0,
+      })
+
+      chart_data.push({
+        id: i,
+        title: i,
+        type: 0,
         number: 1
       })
     }
@@ -102,16 +109,16 @@ class Goods extends Component {
         id: i+ 10 ,
         title: i+ 10,
         type: 0,
-        number: 0
       })
     }
 
-    var items = data.filter((item) => {
-      return  item.number > 0 && item.type === 0;
-    });
+    this.setState({
+      data: data
+    })
+
 
     let { addChart } = this.props;
-    items.map((item)=> {
+    chart_data.map((item)=> {
       return addChart(item)
     })
   }
@@ -131,7 +138,6 @@ class Goods extends Component {
     //禁止滚动
     this.rightDiv.style.overflow = 'hidden'
     this.leftDiv.style.overflow = 'hidden'
-
   }
 
   onModalHide = () => {
@@ -145,6 +151,7 @@ class Goods extends Component {
   }
 
   numberChanged = (newItem) => {
+    console.log(newItem)
     let { addChart } = this.props;
     addChart(newItem)
   }
@@ -154,10 +161,10 @@ class Goods extends Component {
       <div className="goods-root">
         <div className="goods-content">
           <div className="left" ref={(left) => { this.leftDiv = left; }}>
-            <CategoryList data={numbers}/>
+            <CategoryList data={categories}/>
           </div>
           <div className="right" ref={(right) => { this.rightDiv = right; }}>
-            <GoodsList numberChanged={this.numberChanged}  data={data}/>
+            <GoodsList numberChanged={this.numberChanged}  data={this.state.data}/>
           </div>
         </div>
         <div className="goods-cart" style={{visibility: this.state.isOpen?'hidden':'visible'}} >
@@ -175,6 +182,7 @@ const mapStateToProps = (state) => {
   // state === reducer
   return {
     selected_index: state.goods_list.selected_index, //goodsIndexTapChanged触发改变，滚动到指定位置
+    chart_items: state.chart
   };
 };
 

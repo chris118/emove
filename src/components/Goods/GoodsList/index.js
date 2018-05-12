@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import {List} from 'antd-mobile';
 import styled from 'styled-components';
 import IndexStepper from '../../Common/Stepper/index'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {addChart} from '../../../actions/actions'
+
 import './index.css';
 
 const Item = List.Item;
@@ -11,20 +15,31 @@ const StyledItem = styled(Item) `
   `
 class GoodsList extends Component {
 
-  constructor(props){
-    super(props)
-
-    this.state = {
-      number: 0
-    }
+  updateDataWithChart = () => {
+    this.props.data.map((item) => {
+      this.props.chart_items.forEach((char_item) => {
+        // console.log(char_item)
+        // console.log(item)
+        if(char_item.id === item.id){
+          let newItem = Object.assign(item, {number: char_item.number})
+          return newItem
+        }
+      })
+    })
   }
 
   numberChanged = (number, item) => {
     let newItem = Object.assign(item, {number: number})
+    // console.log("newItem", newItem)
     this.props.numberChanged(newItem)
+    // let { addChart } = this.props;
+    // addChart(newItem)
   }
 
   render() {
+    this.updateDataWithChart()
+    // console.log(this.props.data)
+
     const listItems = this.props.data.map((item, index) =>
       {
         if(item.type === 0 ){
@@ -49,4 +64,16 @@ class GoodsList extends Component {
   }
 }
 
-export default GoodsList;
+const mapStateToProps = (state) => {
+  return {
+    chart_items: state.chart,
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addChart: bindActionCreators(addChart, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GoodsList);

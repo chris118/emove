@@ -15,20 +15,8 @@ class CartGoods extends Component {
     super(props);
 
     this.state = {
-      items: [],
+      number: 0,
     };
-  }
-
-  componentWillMount() {
-    this.setState({
-      items: this.props.items
-    })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items: nextProps.items
-    })
   }
 
   onPrevious = () => {
@@ -45,18 +33,17 @@ class CartGoods extends Component {
 
   numberChanged = (number, item) => {
     let newItem = Object.assign(item, {number: number})
-
     let { addChart } = this.props;
     addChart(newItem)
   }
 
 
   render() {
-    const listItems = this.state.items.map((item, index) =>
+    const listItems = this.props.items.map((item, index) =>
       {
         return <Item type={item.type} key={index}
                      extra={
-                       <IndexStepper numberChanged={(number) => this.numberChanged(number, item)}/>}>
+                       <IndexStepper number={item.number} numberChanged={(number) => this.numberChanged(number, item)}/>}>
           {item.title}
         </Item>
       }
