@@ -8,16 +8,16 @@ body {
   background-color: #F5F5F5;
 }
 .vehicle-top {
-  position: absolute;
   left: 0px;
   right: 0px;
   background-color: white;
 }
-.vehicle-bottom {
-  position: absolute;
+.vehicle-content {
+  height: 85vh;
   width: 100%;
   top: 55px;
   border-top: 0.3px solid;
+  overflow: scroll;
 }
 .select-wrapper {
   display: flex;

@@ -30,11 +30,11 @@ class Info extends Component {
   }
 
   onPrevious = () => {
-    this.props.history.replace('/app');
+    this.props.history.goBack();
   }
 
   onNext = () => {
-    this.props.history.replace('/app/goods');
+    this.props.history.push('/app/vehicle');
   }
 
   render() {

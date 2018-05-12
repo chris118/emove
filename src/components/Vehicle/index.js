@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Icon, Menu, List} from 'antd-mobile';
 import VehicleItem from './VehicleItem'
+import NaviBar from '../Common/NaviBar';
 
 import './index.css';
 
@@ -29,6 +30,19 @@ const data = [
   {
     name: 'ccccc',
   },
+  {
+    name: 'ccccc',
+  },{
+    name: 'ccccc',
+  },{
+    name: 'ccccc',
+  },{
+    name: 'ccccc',
+  },{
+    name: 'ccccc',
+  },{
+    name: 'ccccc',
+  },
 ];
 
 class Vehicle extends Component {
@@ -39,6 +53,14 @@ class Vehicle extends Component {
       menu_show: false,
       menu_value: ['1']
     };
+  }
+
+  onPrevious = () => {
+    this.props.history.goBack();
+  }
+
+  onNext = () => {
+    this.props.history.push('/app/order');
   }
 
   menuClick = () => {
@@ -56,6 +78,9 @@ class Vehicle extends Component {
   onMenuChange = (value) => {
     this.setState({
       menu_value: value,
+    });
+    this.setState({
+      menu_show: false,
     });
   }
 
@@ -86,10 +111,13 @@ class Vehicle extends Component {
             <Icon className="vehicle-icon" type="down" />
           </div>
         </div>
-        <div className="vehicle-bottom">
+        <div className="vehicle-content">
           <List>
             {listItems}
           </List>
+        </div>
+        <div className="infoex-navibar">
+          <NaviBar onPrevious={this.onPrevious} onNext={this.onNext}/>
         </div>
         {menu_show ? menuEl : null}
         {menu_show ? <div className="menu-mask" onClick={this.onMaskClick} /> : null}

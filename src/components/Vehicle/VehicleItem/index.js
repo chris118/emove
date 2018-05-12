@@ -1,12 +1,27 @@
 import React, {Component} from 'react';
-import {Checkbox, Icon} from 'antd-mobile';
+import {Checkbox, List} from 'antd-mobile';
 
 import './index.css';
 
+const Item = List.Item;
+
 class VehicleItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      checked: false,
+    };
+  }
+
+  itemClicked = () => {
+    this.setState({
+      checked: !this.state.checked,
+    })
+  }
   render() {
     return (
-      <div className="vehicle-item-root">
+      <div className="vehicle-item-root" onClick={this.itemClicked}>
         <div className="top">
           <div className="top-left">
             <img className="item-icon" src="http://www.w3school.com.cn/i/eg_tulip.jpg"/>
@@ -14,7 +29,7 @@ class VehicleItem extends Component {
           <div className="top-center">
             <div className="vehicle-name">上海蚂蚁搬厂车队</div>
             <div className="vehicle-info">
-              <ul class="vehicle-star">
+              <ul className="vehicle-star">
                 <li>&#9733;</li>
                 <li>&#9733;</li>
                 <li>&#9733;</li>
@@ -26,7 +41,7 @@ class VehicleItem extends Component {
             <div className="vehicle-info">嘉定区, 距离您7.5km</div>
           </div>
           <div className="top-right">
-            <Checkbox className="vehicle-check" />
+            <Checkbox className="vehicle-check" checked={this.state.checked}/>
             <div className="vehicle-time">2018-5-12仅剩车次3</div>
           </div>
         </div>

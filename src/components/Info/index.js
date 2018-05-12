@@ -58,7 +58,7 @@ class Info extends Component {
   next = (event) => {
     event.preventDefault();
 
-    this.props.history.replace('/app/infoex');
+    this.props.history.push('/app/goods');
   }
 
   initMap() {

@@ -5,6 +5,7 @@ import Goods from '../Goods';
 import Info from '../Info';
 import InfoEx from '../InfoEx';
 import Vehicle from '../Vehicle';
+import Order from '../Order';
 
 import './index.css';
 
@@ -18,7 +19,7 @@ class Home extends Component {
             <Route path={`${this.props.match.path}/infoex`} component={InfoEx} />
             <Route path={`${this.props.match.path}/goods`} component={Goods} />
             <Route path={`${this.props.match.path}/vehicle`} component={Vehicle} />
-
+            <Route path={`${this.props.match.path}/order`} component={Order} />
           </Switch>
         </div>
       </div>

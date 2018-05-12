@@ -124,11 +124,11 @@ class Goods extends Component {
   }
 
   onPrevious = (event) => {
-    this.props.history.replace('/app/infoex');
+    this.props.history.goBack()
   }
 
   onNext = (event) => {
-    this.props.history.replace('/app/vehicle');
+    this.props.history.push('/app/infoex')
   }
 
   onCartClick = () => {
