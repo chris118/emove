@@ -1,5 +1,6 @@
 body {
   background-color: #F5F5F5;
+  color: #6E6E6E;
 }
 .vehicle-root {
   display: flex;
@@ -56,6 +57,6 @@ body {
   opacity: 0.4;
   z-index: 89;
 }
-.am-list-body::after {
-  height: 0;
+html:not([data-scale]) .am-list-body::after {
+  height: 0px;
 }

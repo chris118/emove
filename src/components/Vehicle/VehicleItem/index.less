@@ -1,8 +1,100 @@
 @import "../../../static/css/base.less";
 
+@margin-bottom: 12px;
 
 .vehicle-item-root {
-  height: 160px;
+  height: 165px;
   background-color: white;
   border-bottom: 18px @background-color solid;
 }
+
+.top {
+  display: flex;
+  height: 110px;
+  border-bottom: 0.1px solid @font-color;
+  margin-left: 10px;
+}
+
+.top-left {
+  width: 115px;
+}
+
+.top-center {
+  flex:2;
+}
+
+.top-right {
+  display: flex;
+  flex:2;
+  margin-right: 15px;
+  flex-direction: column;
+}
+
+.item-icon {
+  width: 85px;
+  height: 85px;
+  margin: 13px 15px 13px 20px;
+}
+
+.vehicle-name {
+  font-size: 18px;
+  margin-top: 15px;
+  margin-bottom: @margin-bottom;
+}
+
+.vehicle-info {
+  display: flex;
+  color: @font-color;
+  margin-bottom: @margin-bottom;
+}
+
+.vehicle-check {
+  position: absolute;
+  right: 15px;
+  margin-top: 20px;
+}
+.vehicle-time {
+  margin-top: 60px;
+  text-align: right;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+.vehicle-h{
+  background-color: #FDC02E;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 2px;
+}
+
+.vehicle-i {
+  height: 20px;
+  line-height: 20px;
+}
+
+.vehicle-star {
+  width: 80px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.vehicle-star li{
+  list-style: none;
+  float: left;
+  font-size: 12px;
+  margin: 1px;
+  color: #FDC02E;
+  cursor: pointer;
+}/*五角星样式*/
+
+.hs,.cs{
+  color:#f00;
+}/*五角星点击后样式*/
