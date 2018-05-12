@@ -1,0 +1,8 @@
+body {
+  background-color: #F5F5F5;
+}
+.vehicle-item-root {
+  height: 160px;
+  background-color: white;
+  border-bottom: 18px #F5F5F5 solid;
+}

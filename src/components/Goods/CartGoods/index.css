@@ -1,3 +1,6 @@
+body {
+  background-color: #F5F5F5;
+}
 .cartgoods-root {
   display: flex;
   flex-direction: column;

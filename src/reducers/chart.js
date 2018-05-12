@@ -10,6 +10,7 @@ export default function chart(state = [], action = {}) {
           bFound = true;
           item.number = action.payload.item.number
         }
+        return item
       })
 
       if(!bFound){

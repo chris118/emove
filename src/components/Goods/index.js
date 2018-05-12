@@ -112,7 +112,6 @@ class Goods extends Component {
       })
     }
 
-    console.log('setstate', data)
     this.setState({
       data: data
     })
@@ -129,6 +128,7 @@ class Goods extends Component {
   }
 
   onNext = (event) => {
+    this.props.history.replace('/app/vehicle');
   }
 
   onCartClick = () => {
