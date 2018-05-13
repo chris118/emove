@@ -9,7 +9,6 @@ export default function author(WrappedComponent) {
       const {history} = this.props
       const isAuthor = !!window.localStorage.getItem("open-id");
       console.log("isAuthor", isAuthor)
-      //拦截地址栏直接输入login
       if(this.props.location.pathname === '/login'){
         history.replace('/login');
       }else {

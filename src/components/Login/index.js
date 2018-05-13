@@ -57,7 +57,7 @@ class Login extends Component {
   login = (event) => {
     event.preventDefault();
 
-    Post("/send/login-code", {
+    Post("/code/login", {
       username: this.state.mobile,
       code: '123456'
     })
