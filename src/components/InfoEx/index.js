@@ -75,7 +75,7 @@ class Info extends Component {
         </Picker>
         <WhiteSpace size="xl"/>
 
-        <div className="infoex-navibar">
+        <div className="navibar">
           <NaviBar onPrevious={this.onPrevious} onNext={this.onNext}/>
         </div>
       </div>

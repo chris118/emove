@@ -1,9 +1,8 @@
 import axios from "axios";
 import qs from "qs";
-import { message } from 'antd';
 
 const axiosInstance = axios.create({
-  baseURL: "http://127.0.0.1:4000/api",
+  baseURL: "http://api-dev.ebanjia.cn",
   timeout: 10000,
   responseType: "json",
   headers: {
@@ -33,37 +32,25 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   error => {
-    message.error(error);
-    return Promise.reject(error.data.error.message);
+    return error;
   }
 );
 
 //返回状态判断(添加响应拦截器)
 axiosInstance.interceptors.response.use(
   res => {
+    console.log(res)
     //对响应数据做些事
-    if (res.data.code !== 200) {
-      return Promise.reject(res.data.data.error);
+    if (res.data.code !== 0) {
+      return Promise.reject(res.data);
     }
     return res;
   },
   error => {
-    if (error.response.code === 403) {
+    console.error(error)
 
-    }
-    if (error.response.code === 500) {
-
-    }
-    if (error.response.code === 502) {
-
-    }
-    if (error.response.code === 404) {
-
-    }
-
-    message.error(error);
     // 返回 response 里的错误信息
-    return Promise.reject( error.data.data.error);
+    return Promise.reject( error);
   }
 );
 

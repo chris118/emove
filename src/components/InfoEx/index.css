@@ -2,13 +2,15 @@ body {
   background-color: #F5F5F5;
   color: #6E6E6E;
 }
+.navibar {
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .infoex-header {
   height: 90px;
   background-color: #0F8EE9;
   color: white;
   text-align: center;
   line-height: 90px;
-}
-.infoex-navibar {
-  background-color: white;
 }

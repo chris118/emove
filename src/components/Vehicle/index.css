@@ -2,6 +2,11 @@ body {
   background-color: #F5F5F5;
   color: #6E6E6E;
 }
+.navibar {
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .vehicle-root {
   display: flex;
   flex-direction: column;
@@ -11,12 +16,13 @@ body {
   left: 0px;
   right: 0px;
   background-color: white;
+  border-bottom: 0.5px red;
 }
 .vehicle-content {
-  height: 85vh;
+  height: calc(100vh - 55px - 67px);
   width: 100%;
   top: 55px;
-  border-top: 0.3px solid;
+  hei: 80vh;
   overflow: scroll;
 }
 .select-wrapper {

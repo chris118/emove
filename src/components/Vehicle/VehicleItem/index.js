@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import {Checkbox, List} from 'antd-mobile';
+import {Checkbox} from 'antd-mobile';
 
 import './index.css';
-
-const Item = List.Item;
 
 class VehicleItem extends Component {
   constructor(props) {
@@ -24,7 +22,7 @@ class VehicleItem extends Component {
       <div className="vehicle-item-root" onClick={this.itemClicked}>
         <div className="top">
           <div className="top-left">
-            <img className="item-icon" src="http://www.w3school.com.cn/i/eg_tulip.jpg"/>
+            <img className="item-icon" src="http://www.w3school.com.cn/i/eg_tulip.jpg" alt=""/>
           </div>
           <div className="top-center">
             <div className="vehicle-name">上海蚂蚁搬厂车队</div>

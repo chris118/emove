@@ -1,0 +1,43 @@
+@import "../../../static/css/base.less";
+
+.orderitem-root {
+  display: flex;
+  flex-direction: column;
+  height: 165px;
+  background-color: white;
+  border-bottom: 18px @background-color solid;
+}
+.orderitem-sub{
+  display: flex;
+  padding-left: 15px;
+  margin-top: 10px;
+}
+.orderitem-sub1{
+  &:extend(.orderitem-sub);
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.orderitem-title {
+  margin-right: 5px;
+}
+.orderitem-status {
+  position: absolute;
+  right: 15px;
+  color: @blue;
+}
+
+.orderitem-detai-btn {
+  position: absolute;
+  right: 25px;
+}
+
+.orderitem-time {
+  display: flex;
+  margin-top: 15px;
+}
+
+.orderitem-time-value {
+  color: @blue;
+}

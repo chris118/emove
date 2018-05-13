@@ -6,10 +6,12 @@ import Info from '../Info';
 import InfoEx from '../InfoEx';
 import Vehicle from '../Vehicle';
 import Order from '../Order';
+import OrderList from '../OrderList';
 
 import './index.css';
 
 class Home extends Component {
+
   render() {
     return (
       <div className="home-container">
@@ -20,6 +22,7 @@ class Home extends Component {
             <Route path={`${this.props.match.path}/goods`} component={Goods} />
             <Route path={`${this.props.match.path}/vehicle`} component={Vehicle} />
             <Route path={`${this.props.match.path}/order`} component={Order} />
+            <Route path={`${this.props.match.path}/orderlist`} component={OrderList} />
           </Switch>
         </div>
       </div>

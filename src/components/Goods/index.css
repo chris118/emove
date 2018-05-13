@@ -1,7 +1,4 @@
 /*This just stops me getting horizontal scrolling if anything overflows the width*/
-body {
-  overflow-x: hidden;
-}
 .goods-root {
   display: flex;
   flex-direction: column;
@@ -9,10 +6,13 @@ body {
 .goods-cart {
   z-index: 1000;
 }
+.cart-root {
+  padding-bottom: 10px;
+}
 /*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place and padded with negative margin and padding*/
 .goods-content {
   display: flex;
-  height: 83vh;
+  height: calc(100vh - 118px);
   width: 100%;
 }
 /*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.

@@ -1,0 +1,46 @@
+body {
+  background-color: #F5F5F5;
+  color: #6E6E6E;
+}
+.navibar {
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.orderitem-root {
+  display: flex;
+  flex-direction: column;
+  height: 165px;
+  background-color: white;
+  border-bottom: 18px #F5F5F5 solid;
+}
+.orderitem-sub,
+.orderitem-sub1 {
+  display: flex;
+  padding-left: 15px;
+  margin-top: 10px;
+}
+.orderitem-sub1 {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.orderitem-title {
+  margin-right: 5px;
+}
+.orderitem-status {
+  position: absolute;
+  right: 15px;
+  color: #0092E0;
+}
+.orderitem-detai-btn {
+  position: absolute;
+  right: 25px;
+}
+.orderitem-time {
+  display: flex;
+  margin-top: 15px;
+}
+.orderitem-time-value {
+  color: #0092E0;
+}

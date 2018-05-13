@@ -2,19 +2,34 @@ import React, {Component} from 'react';
 import './index.css';
 import {
   InputItem, Button, WingBlank, WhiteSpace} from 'antd-mobile';
+import {Get, Post} from '../../service';
+
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      mobile:"15618516930",
       timeLeft: 5,
       begin: 0
     };
   }
 
-  beginCountDown = (event) => {
+  //获取验证码
+  verifyCode = (event) => {
     event.preventDefault();
+
+    console.log(this.state.mobile)
+    Get("/send/login-code", {params :{username: this.state.mobile}} )
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+
+
     console.log(this.state.timeLeft)
     if (this.state.timeLeft > 0) {
       this.setState({
@@ -42,9 +57,23 @@ class Login extends Component {
   login = (event) => {
     event.preventDefault();
 
-    this.props.history.push('/app');
+    Post("/send/login-code", {
+      username: this.state.mobile,
+      code: '123456'
+    })
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   }
 
+  phoneOnChange = (e) => {
+    this.setState({
+      mobile: e
+    })
+  }
   render() {
     return (
       <div className="flex-container">
@@ -52,8 +81,9 @@ class Login extends Component {
 
         <WingBlank size="sm">
           <InputItem
-            type="phone"
-            placeholder="请输入手机号"/>
+            placeholder="请输入手机号"
+            value={this.state.mobile}
+            onChange={this.phoneOnChange}/>
         </WingBlank>
         <WhiteSpace size="lg" />
 
@@ -65,7 +95,7 @@ class Login extends Component {
               className="input-item"
               type="number"
               placeholder="请输入验证码"/>
-            <span className="verify-link" onClick={this.beginCountDown}>
+            <span className="verify-link" onClick={this.verifyCode}>
               { this.state.begin === 0 ? '获取验证码' : this.state.timeLeft}
             </span>
           </div>

@@ -1,26 +1,20 @@
 import React, {Component} from 'react';
-import {Icon, Menu, List} from 'antd-mobile';
-import VehicleItem from './VehicleItem'
+import './index.css';
+import {Icon, Menu, List, Button, WingBlank} from 'antd-mobile';
+import OrderItem from './OrderItem'
 import NaviBar from '../Common/NaviBar';
 
-import './index.css';
-
-
 const menu_data = [
-
   {
     value: '1',
-    label: '智能排序',
-  },{
-    value: '2',
-    label: '距离',
+    label: '所有订单',
   }, {
-    value: '3',
-    label: '时间',
+    value: '2',
+    label: '已完成',
   },
   {
-    value: '4',
-    label: '点评',
+    value: '3',
+    label: '未完成',
   },
 ];
 
@@ -49,22 +43,14 @@ const data = [
   },
 ];
 
-class Vehicle extends Component {
+class OrderList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       menu_data: menu_data,
       menu_show: false,
-      menu_value: ['1']
+      menu_value: ['1'],
     };
-  }
-
-  onPrevious = () => {
-    this.props.history.goBack();
-  }
-
-  onNext = () => {
-    this.props.history.push('/app/order');
   }
 
   menuClick = () => {
@@ -80,26 +66,28 @@ class Vehicle extends Component {
   }
 
   onMenuChange = (value) => {
+    console.log(value)
     this.setState({
       menu_value: value,
     });
+
     this.setState({
       menu_show: false,
     });
   }
 
   render() {
-    const { menu_data, menu_show, menu_value } = this.state;
     const menuEl = (
       <Menu
         className="vehicle-menu"
-        data={menu_data}
-        value={menu_value}
+        data={this.state.menu_data}
+        value={this.state.menu_value}
         level={1}
         onChange={this.onMenuChange}
         height={140}
       />
     );
+    const { menu_data, menu_show, menu_value } = this.state;
     let menu_lable = ""
     menu_data.forEach((dataItem) => {
       if (dataItem.value === menu_value[0]) {
@@ -109,25 +97,24 @@ class Vehicle extends Component {
 
     const listItems = data.map((item, index) =>
       {
-        return <VehicleItem data={item} key={index}/>
+        return <OrderItem data={item} key={index}/>
       }
     );
-
     return (
-      <div className="vehicle-root">
+      <div className="orderlist-root">
         <div className="vehicle-top">
           <div className="select-wrapper" onClick={this.menuClick}>
             <div>{menu_lable}</div>
             <Icon className="vehicle-icon" type="down" />
           </div>
         </div>
-        <div className="vehicle-content">
+        <div className="orderlist-content">
           <List>
             {listItems}
           </List>
         </div>
-        <div className="navibar">
-          <NaviBar onPrevious={this.onPrevious} onNext={this.onNext}/>
+        <div className="orderlist-navibar">
+          <WingBlank><Button type="primary">拨打免费服务热线</Button></WingBlank>
         </div>
         {menu_show ? menuEl : null}
         {menu_show ? <div className="menu-mask" onClick={this.onMaskClick} /> : null}
@@ -136,4 +123,4 @@ class Vehicle extends Component {
   }
 }
 
-export default Vehicle;
+export default OrderList;

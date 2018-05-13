@@ -2,3 +2,8 @@ body {
   background-color: #F5F5F5;
   color: #6E6E6E;
 }
+.navibar {
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
