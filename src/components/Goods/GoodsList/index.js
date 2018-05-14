@@ -18,15 +18,20 @@ class GoodsList extends Component {
     super(props);
 
     this.state = {
-      cart_goods: [],
     };
   }
   componentWillMount() {
-    this.setState({
-      cart_goods: this.props.data.cart_goods
+    const {cart_goods} = this.props.data
+    let { addChart } = this.props;
+    cart_goods.forEach((item) => {
+      addChart(item)
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    //使用chart_items更新数字
+    console.log("使用chart_items更新数字")
+  }
 
   updateDataWithChart = () => {
     this.props.data.map((item) => {
@@ -39,24 +44,12 @@ class GoodsList extends Component {
     })
   }
 
-  add = (number, item) => {
-    // this.state.cart_goods.push(item)
-    // this.setState({
-    //   cart_goods: this.state.cart_goods
-    // })
-    // console.log(this.state.cart_goods)
-
+  plus = (number, item) => {
     let { addChart } = this.props;
     addChart(item)
   }
 
   minus = (number, item) => {
-    // this.state.cart_goods.push(item)
-    // this.setState({
-    //   cart_goods: this.state.cart_goods
-    // })
-    // console.log(this.state.cart_goods)
-
     let { removeChart } = this.props;
     removeChart(item)
   }
@@ -77,7 +70,7 @@ class GoodsList extends Component {
           let sub_item =<StyledItem type={0} key={all_goods[j].goods_id} extra={
             <IndexStepper
               number={0}
-              plus={(number) => this.add(number, all_goods[j])}
+              plus={(number) => this.plus(number, all_goods[j])}
               minus={(number) => this.minus(number, all_goods[j])}/>}>
             {all_goods[j].goods_name}
           </StyledItem>

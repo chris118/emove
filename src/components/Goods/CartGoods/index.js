@@ -4,7 +4,7 @@ import Cart from '../Cart'
 import IndexStepper from '../../Common/Stepper/index'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {addChart} from '../../../actions/actions'
+import {addChart, removeChart} from '../../../actions/actions'
 
 import './index.css';
 //测试数据
@@ -15,8 +15,41 @@ class CartGoods extends Component {
     super(props);
 
     this.state = {
-      number: 0,
+      cart_list: []
     };
+  }
+
+  componentWillMount() {
+    //整理数据
+    let itmes =  this.props.items.forEach((item) => {
+
+      //是否在cart_list里
+      let bFound = false
+      this.state.cart_list.forEach((cart_item) => {
+        if(cart_item.goods_id === item.goods_id){
+          bFound = true
+        }
+      })
+
+      if(bFound === true){ //如果在更新数字
+        this.state.cart_list.forEach((cart_item, index) => {
+          if(cart_item.goods_id === item.goods_id){
+            const list = this.state.cart_list
+            list[index].number = list[index].number + 1
+            this.setState({
+              cart_list: list
+            })
+          }
+        })
+      }else {// 不在则插入一条
+        let newItem = Object.assign(item, {number: 1})
+        const list = this.state.cart_list
+        list.push(newItem)
+        this.setState({
+          cart_list: list
+        })
+      }
+    })
   }
 
   onPrevious = () => {
@@ -31,20 +64,27 @@ class CartGoods extends Component {
     this.props.onCartClick()
   }
 
-  numberChanged = (number, item) => {
-    let newItem = Object.assign(item, {number: number})
+  plus = (number, item) => {
     let { addChart } = this.props;
-    addChart(newItem)
+    addChart(item)
+  }
+
+  minus = (number, item) => {
+    let { removeChart } = this.props;
+    removeChart(item)
   }
 
 
   render() {
-    const listItems = this.props.items.map((item, index) =>
+    const listItems = this.state.cart_list.map((item, index) =>
       {
-        return <Item type={item.type} key={index}
+        return <Item type={0} key={index}
                      extra={
-                       <IndexStepper number={item.number} numberChanged={(number) => this.numberChanged(number, item)}/>}>
-          {item.title}
+                       <IndexStepper
+                         number={item.number}
+                         plus={(number) => this.plus(number, item)}
+                         minus={(number) => this.minus(number, item)}/>}>
+          {item.goods_name}
         </Item>
       }
     );
@@ -55,7 +95,7 @@ class CartGoods extends Component {
           { listItems }
         </div>
 
-        <Cart items={this.state.items} onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
+        <Cart onPrevious={this.onPrevious} onNext={this.onNext} onCartClick={this.onCartClick}/>
       </div>
     );
   }
@@ -71,6 +111,7 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
   return {
     addChart: bindActionCreators(addChart, dispatch),
+    removeChart: bindActionCreators(removeChart, dispatch),
   }
 }
 
