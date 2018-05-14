@@ -7,20 +7,19 @@ import {goodsIndexChanged, addChart} from '../../actions/actions'
 import Cart from './Cart'
 import CartGoods from './CartGoods'
 import Modal from '../Common/Modal';
+import {Get, Post} from '../../service'
 
 import './index.css';
-
-//测试数据
-const categories = []
-let data = []
-let chart_data = []
 
 class Goods extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [],
+      first_category: [],
+      second_category: [],
+      all_goods: [],
+      cart_goods: [],
       isOpen: false,
     };
   }
@@ -31,12 +30,30 @@ class Goods extends Component {
 
   componentDidMount() {
     this.rightDiv.addEventListener('scroll', () => {
-      // 由 react-redux 注入：
-      let { goodsIndexChanged } = this.props;
+      //滚动到的类别index
       var index = 0;
-      if(this.rightDiv.scrollTop >= 44*11){
-        index = 1;
+
+      let category_height_list = []
+      for(let i = 0; i < this.state.second_category.length; i++){
+         const {category_id} = this.state.second_category[i]
+         let sub_item_count = 0
+        for(let i = 0; i < this.state.all_goods.length; i++) {
+          const {parent_category_id} = this.state.all_goods[i]
+          if(category_id === parent_category_id){
+            sub_item_count++;
+          }
+        }
+        category_height_list.push(44*(sub_item_count + 1))
       }
+      let total_height = 0;
+      for(let i = 0; i < category_height_list.length; i++) {
+        total_height += category_height_list[i]
+        if(this.rightDiv.scrollTop >= total_height){
+          index = i+1;
+        }
+      }
+
+      let { goodsIndexChanged } = this.props;
       goodsIndexChanged(index)
     });
   }
@@ -49,78 +66,21 @@ class Goods extends Component {
     }
   }
 
-
   loadData() {
-    //category
-    categories.push(  {
-      id: 100,
-      title: 'H1',
-      type: 1
-    })
-    for(var i = 1; i <= 5; i ++){
-      categories.push({
-        id: i,
-        title: i,
-        type: 0
+    let that = this
+    Get("/cart/goods", {} )
+      .then(function (res) {
+        console.log(res)
+        const {first_category, second_category, all_goods} = res.result;
+        that.setState({
+          first_category: first_category,
+          second_category: second_category,
+          all_goods: all_goods
+        })
       })
-    }
-
-    categories.push(  {
-      id: 101,
-      title: 'H2',
-      type: 1
-    })
-    for(i = 1; i <= 20; i ++){
-      categories.push({
-        id: i,
-        title: i,
-        type: 0
+      .catch(function (error) {
+        console.error(error)
       })
-    }
-
-    //goods
-    data.push(  {
-      id: 100,
-      title: 'Header1',
-      type: 1
-    })
-    for(i = 1; i <= 5; i ++){
-      data.push({
-        id: i,
-        title: i,
-        type: 0,
-      })
-
-      chart_data.push({
-        id: i,
-        title: i,
-        type: 0,
-        number: 1
-      })
-    }
-
-    data.push(  {
-      id: 101,
-      title: 'Header2',
-      type: 1
-    })
-    for(i = 1; i <= 20; i ++){
-      data.push({
-        id: i+ 10 ,
-        title: i+ 10,
-        type: 0,
-      })
-    }
-
-    this.setState({
-      data: data
-    })
-
-
-    let { addChart } = this.props;
-    chart_data.map((item)=> {
-      return addChart(item)
-    })
   }
 
   onPrevious = (event) => {
@@ -128,7 +88,7 @@ class Goods extends Component {
   }
 
   onNext = (event) => {
-    this.props.history.push('/app/infoex')
+    this.props.history.push('/infoex')
   }
 
   onCartClick = () => {
@@ -150,7 +110,6 @@ class Goods extends Component {
     this.rightDiv.style.overflow = 'auto'
     this.leftDiv.style.overflow = 'auto'
 
-    data = []
     this.loadData();
   }
 
@@ -159,10 +118,13 @@ class Goods extends Component {
       <div className="goods-root">
         <div className="goods-content">
           <div className="left" ref={(left) => { this.leftDiv = left; }}>
-            <CategoryList data={categories}/>
+            <CategoryList data={ {first_category: this.state.first_category,
+                                  second_category: this.state.second_category}}/>
           </div>
           <div className="right" ref={(right) => { this.rightDiv = right; }}>
-            <GoodsList  data={this.state.data}/>
+            <GoodsList  data={{all_goods: this.state.all_goods,
+                                second_category: this.state.second_category,
+                                cart_goods: this.state.cart_goods}}/>
           </div>
         </div>
         <div className="goods-cart" style={{visibility: this.state.isOpen?'hidden':'visible'}} >

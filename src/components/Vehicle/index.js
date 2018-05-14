@@ -64,7 +64,7 @@ class Vehicle extends Component {
   }
 
   onNext = () => {
-    this.props.history.push('/app/order');
+    this.props.history.push('/order');
   }
 
   menuClick = () => {

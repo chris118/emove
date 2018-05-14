@@ -24,7 +24,7 @@ class Stepper extends Component {
       number: this.state.number + 1
     })
 
-    this.props.numberChanged(this.state.number + 1)
+    this.props.plus(this.state.number + 1)
   }
 
   minus = (event) => {
@@ -32,7 +32,7 @@ class Stepper extends Component {
     this.setState({
       number: this.state.number - 1
     })
-    this.props.numberChanged(this.state.number - 1)
+    this.props.minus(this.state.number - 1)
   }
 
   render() {

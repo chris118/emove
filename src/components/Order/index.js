@@ -24,7 +24,7 @@ class Order extends Component {
   }
 
   goOrderList = () => {
-    this.props.history.push('/app/orderlist');
+    this.props.history.push('/orderlist');
   }
 
   render() {

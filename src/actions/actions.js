@@ -2,6 +2,7 @@ import {
   GOODS_LIST_INDEX,
   GOODS_LIST_TAP_INDEX,
   ADD_CHART,
+  REMOVE_CHART,
 } from './actions-type'
 
 export function goodsIndexChanged(index) {
@@ -25,6 +26,15 @@ export function goodsIndexTapChanged(index) {
 export function addChart(item) {
   return {
     type: ADD_CHART,
+    payload: {
+      item: item,
+    }
+  }
+}
+
+export function removeChart(item) {
+  return {
+    type: REMOVE_CHART,
     payload: {
       item: item,
     }

@@ -28,22 +28,15 @@ class Cart extends Component {
   }
 
   componentWillMount() {
-    var number = 0
-    this.props.items.map((item) => {
-       return number += item.number
-    })
     this.setState({
-      number: number
+      number: this.props.items.length
     })
   }
 
   componentWillReceiveProps(nextProps) {
-    var number = 0
-    nextProps.items.map((item) => {
-       return number += item.number
-    })
+    // console.log(nextProps.items)
     this.setState({
-      number: number
+      number: nextProps.items.length
     })
   }
 
@@ -65,9 +58,9 @@ class Cart extends Component {
         <div className="cart-top">
           <span className="cart-number">
            <CustomIcon type={require('../../../static/images/cart.svg')} size="lg" onClick={this.onCartClick}/>
-            <Badge className="cart-badge" text={this.state.number}  />
+            <Badge text={this.state.number}  />
           </span>
-          {/*<div className="cart-info">您当前所选物体的总体积</div>*/}
+          <div className="cart-info">您当前所选物体的总体积</div>
           <div className="cart-info-number">{this.state.bulk}</div>
           <div className="cart-info-number cart-info-number-second">m³</div>
         </div>

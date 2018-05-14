@@ -44,7 +44,7 @@ axiosInstance.interceptors.response.use(
     if (res.data.code === 6004) {//跳转登录页面
       history.replace('/login');
     }else if (res.data.code === 6005) {
-      window.location.href = 'http://oauth.ebanjia.cn/oauth?redirect_url=http://localhost:3000/#/login'
+      // window.location.href = 'http://oauth.ebanjia.cn/oauth?redirect_url=' + encodeURIComponent('http://localhost:3000/#/login')
     }else if (res.data.code !== 0) {
       return Promise.reject(res.data);
     }
@@ -60,12 +60,34 @@ axiosInstance.interceptors.response.use(
 
 export function Get(url, params) {
   return new Promise((resolve, reject) => {
-    axiosInstance.get(url, params).then(function (response) {
+    const uid = window.localStorage.getItem("uid");
+    const token = window.localStorage.getItem("token");
+
+    let new_params = Object.assign({}, params, {uid: uid, token: token})
+    new_params = Object.assign({}, {params: {}}, {params: new_params})
+
+    // let new_params = {}
+    // new_params['params'] = params
+    // new_params.params['uid'] = uid
+    // new_params.params['token'] = token
+
+    axiosInstance.get(url, new_params).then(function (response) {
       resolve(response.data)
     })
     .catch(function (err) {
       reject(err)
     })
+  })
+}
+
+export function Get2(url, params) {
+  return new Promise((resolve, reject) => {
+    axiosInstance.get(url, params).then(function (response) {
+      resolve(response.data)
+    })
+      .catch(function (err) {
+        reject(err)
+      })
   })
 }
 

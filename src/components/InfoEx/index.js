@@ -34,7 +34,7 @@ class Info extends Component {
   }
 
   onNext = () => {
-    this.props.history.push('/app/vehicle');
+    this.props.history.push('/vehicle');
   }
 
   render() {

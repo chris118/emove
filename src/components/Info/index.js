@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {List, InputItem, Button, WhiteSpace, WingBlank, Picker} from 'antd-mobile';
 import BMap from 'BMap';
+import {Get, Post} from '../../service'
+import {getUid, getToken} from '../../utils'
 
 import './index.css';
 
@@ -27,8 +29,8 @@ const assembles = [
 ];
 
 const floors = [
-  {label: '1', value: 1,}, {label: '2', value: 2,}, {label: '3', value: 3,}, {label: '4', value: 4,}
-  , {label: '5', value: 5,}, {label: '6', value: 6,}, {label: '7', value: 7,}, {label: '8', value: 8,}
+  {label: '1楼', value: 1,}, {label: '2楼', value: 2,}, {label: '3楼', value: 3,}, {label: '4楼', value: 4,}
+  , {label: '5楼', value: 5,}, {label: '6楼', value: 6,}, {label: '7楼', value: 7,}, {label: '8楼', value: 8,}
 ];
 
 class Info extends Component {
@@ -36,32 +38,92 @@ class Info extends Component {
     super(props);
 
     this.state = {
-      address_out: "",
+      address_out: "上海",
       address_out_selected: false,
       elevator_out: [1],
       floor_out: [1],
       assemble_out: [0],
+      distance_out: undefined,
 
-      address_in: "",
+      address_in: "上海",
       address_in_selected: false,
       elevator_in: [1],
       floor_in: [1],
       assemble_in: [0],
+      distance_in: undefined,
     };
   }
 
   componentDidMount() {
-    this.initMap();
+    this.initMap()
+    this.loadData()
   }
-
 
   next = (event) => {
     event.preventDefault();
+    let moveout = {
+      address : this.state.address_out,
+      floor: this.state.floor_out[0],
+      is_elevator: this.state.elevator_out[0],
+      is_handling: this.state.assemble_out[0],
+      distance_meter: this.state.distance_out
+    }
+    let movein = {
+      address : this.state.address_in,
+      floor: this.state.floor_in[0],
+      is_elevator: this.state.elevator_in[0],
+      is_handling: this.state.assemble_in[0],
+      distance_meter: this.state.distance_in
+    }
+    let data = {}
+    data['uid'] = getUid()
+    data['token'] = getToken()
+    data['moveout'] = moveout
+    data['movein'] = movein
+    data['banjia_type'] = 1
 
-    this.props.history.push('/app/goods');
+    let that = this
+    Post("cart/address",data)
+    .then(function (res) {
+      console.log(res)
+      that.props.history.push('/goods');
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
   }
 
-  initMap() {
+  loadData = () => {
+    let that = this
+    Get("/cart/address", {banjia_type : 1} )
+    .then(function (res) {
+      if(JSON.stringify(res.result.movein) === "{}"){
+        return
+      }
+      if(JSON.stringify(res.result.moveout) === "{}"){
+        return
+      }
+      const {movein, moveout} = res.result
+      that.setState({
+        address_out: moveout.address,
+        floor_out: [moveout.floor],
+        elevator_out: moveout.is_elevator ? [1] : [0],
+        assemble_out: moveout.is_handling ? [1] : [0],
+        distance_out: moveout.distance_meter,
+
+        address_in: movein.address,
+        floor_in: [movein.floor],
+        elevator_in: movein.is_elevator ? [1] : [0],
+        assemble_in: movein.is_handling ? [1] : [0],
+        distance_in: movein.distance_meter,
+      })
+    })
+    .catch(function (error) {
+      console.error(error)
+    })
+  }
+
+  initMap = () =>  {
     let map = this.map = new BMap.Map("allmap");
     map.centerAndZoom("上海", 12);
 
@@ -177,7 +239,13 @@ class Info extends Component {
           >
             <List.Item arrow="horizontal">需要拼装</List.Item>
           </Picker>
-          <InputItem placeholder="请填写搬运到车距离(单位米)">搬运距离</InputItem>
+          <InputItem placeholder="请填写搬运到车距离(单位米)"
+                     value={this.state.distance_out}
+                     onChange={(v) => {
+                       this.setState({
+                         distance_out: v,
+                       })}
+                     }>搬运距离</InputItem>
         </List>
 
         {/*搬入*/}
@@ -220,7 +288,13 @@ class Info extends Component {
           >
             <List.Item arrow="horizontal">需要分拆</List.Item>
           </Picker>
-          <InputItem placeholder="25米">搬运距离</InputItem>
+          <InputItem placeholder='25米'
+                     value={this.state.distance_in}
+                     onChange={(v) => {
+                       this.setState({
+                         distance_in: v,
+                       })}
+                     }>搬运距离</InputItem>
         </List>
         <div className="info-tips">提示:预定完成后可拨打400-000-6668进行修改</div>
         <WhiteSpace size="xl"/>

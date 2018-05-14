@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './index.css';
 import {
   InputItem, Button, WingBlank, WhiteSpace} from 'antd-mobile';
-import {Get, Post} from '../../service';
+import {Get2, Post} from '../../service';
 import {KEY_UID, KEY_TOKEN} from '../../utils/index'
 
 
@@ -12,7 +12,7 @@ class Login extends Component {
 
     let open_id = ""
     let param = this.props.location.search
-    if (param.indexOf("?") != -1) {    //判断是否有参数
+    if (param.indexOf("?") !== -1) {    //判断是否有参数
       let str = param.substr(1) //从第一个字符开始 因为第0个是?号 获取所有除问号的所有符串
       let splites = str.split("=")   //用等号进行分隔 （因为知道只有一个参数 所以直接用等号进分隔 如果有多个参数 要用&号分隔 再用等号进行分隔）
       open_id = splites[1]
@@ -35,7 +35,7 @@ class Login extends Component {
       return
     }
 
-    Get("/send/login-code", {params :{username: this.state.mobile}} )
+    Get2("/send/login-code", {params :{username: this.state.mobile}} )
       .then(function (res) {
         console.log(res);
       })
@@ -77,6 +77,7 @@ class Login extends Component {
   login = (event) => {
     event.preventDefault();
 
+    let that = this
     Post("/code/login", {
       username: this.state.mobile,
       code: '123456',
@@ -88,7 +89,7 @@ class Login extends Component {
       window.localStorage[KEY_UID] = res.result.uid;
       window.localStorage[KEY_TOKEN] = res.result.token;
 
-      this.props.history.replace('/app')
+      that.props.history.replace('/app')
     })
     .catch(function (error) {
       console.error(error);

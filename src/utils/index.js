@@ -2,7 +2,7 @@ export const KEY_UID = 'uid';
 export const KEY_TOKEN = 'token';
 
 export function throttle(fn, gapTime) {
-    if (gapTime == null || gapTime == undefined) {
+    if (gapTime === null || gapTime === undefined) {
         gapTime = 1000
     }
 
@@ -16,4 +16,14 @@ export function throttle(fn, gapTime) {
             _lastTime = _nowTime
         }
     }
+}
+
+export function getUid() {
+  const uid = window.localStorage.getItem("uid");
+  return uid
+}
+
+export function getToken() {
+  const token = window.localStorage.getItem("token");
+  return token
 }

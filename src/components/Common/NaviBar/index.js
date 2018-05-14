@@ -13,7 +13,6 @@ class NaviBar extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props.nextTitle)
     if(this.props.nextTitle !== undefined){
       this.setState({
         nextTitle: this.props.nextTitle,

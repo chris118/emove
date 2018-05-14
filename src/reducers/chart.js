@@ -1,23 +1,27 @@
-import {ADD_CHART} from '../actions/actions-type'
+import {ADD_CHART, REMOVE_CHART} from '../actions/actions-type'
 
 export default function chart(state = [], action = {}) {
   switch (action.type){
     case ADD_CHART:
-      let bFound = false;
-      state.map((item) => {
-        // console.log("item.id", item)
-        if(item.id === action.payload.item.id){
-          bFound = true;
-          item.number = action.payload.item.number
+      let addState = state.concat(action.payload.item)
+      console.log(addState)
+      return addState
+    case REMOVE_CHART:
+      let newState = []
+      let bRemoved = false
+      for(let i = 0; i < state.length; i++){
+        if(state[i].goods_id === action.payload.item.goods_id){
+          if(!bRemoved){ //continue代表已经删除了
+            bRemoved = true;
+            continue
+          }else {
+            newState.push(state[i])
+          }
+        }else {
+          newState.push(state[i])
         }
-        return item
-      })
-
-      if(!bFound){
-        state.push(action.payload.item)
       }
-
-      var newState = state.concat()
+      console.log(newState)
       return newState
     default:
       return state;
