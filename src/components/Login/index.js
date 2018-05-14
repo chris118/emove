@@ -3,16 +3,27 @@ import './index.css';
 import {
   InputItem, Button, WingBlank, WhiteSpace} from 'antd-mobile';
 import {Get, Post} from '../../service';
+import {KEY_UID, KEY_TOKEN} from '../../utils/index'
 
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
+    let open_id = ""
+    let param = this.props.location.search
+    if (param.indexOf("?") != -1) {    //判断是否有参数
+      let str = param.substr(1) //从第一个字符开始 因为第0个是?号 获取所有除问号的所有符串
+      let splites = str.split("=")   //用等号进行分隔 （因为知道只有一个参数 所以直接用等号进分隔 如果有多个参数 要用&号分隔 再用等号进行分隔）
+      open_id = splites[1]
+    }
+
     this.state = {
+      open_id: open_id,
       mobile:"15618516930",
       timeLeft: 5,
-      begin: 0
+      begin: 0,
+      verifyEnable:true
     };
   }
 
@@ -20,7 +31,10 @@ class Login extends Component {
   verifyCode = (event) => {
     event.preventDefault();
 
-    console.log(this.state.mobile)
+    if(!this.state.verifyEnable){
+      return
+    }
+
     Get("/send/login-code", {params :{username: this.state.mobile}} )
       .then(function (res) {
         console.log(res);
@@ -42,10 +56,16 @@ class Login extends Component {
         if (that.state.timeLeft === 0) {
           clearInterval(interval);
           that.setState({
+            verifyEnable: true
+          })
+          that.setState({
             begin: 0,
             timeLeft: 5
           })
         } else {
+          that.setState({
+            verifyEnable: false
+          })
           that.setState({
             timeLeft: that.state.timeLeft - 1
           })
@@ -59,14 +79,20 @@ class Login extends Component {
 
     Post("/code/login", {
       username: this.state.mobile,
-      code: '123456'
+      code: '123456',
+      openid: this.state.open_id
     })
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    .then(function (res) {
+       //登录成功 存储uid token
+      console.log(res)
+      window.localStorage[KEY_UID] = res.result.uid;
+      window.localStorage[KEY_TOKEN] = res.result.token;
+
+      this.props.history.replace('/app')
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
   }
 
   phoneOnChange = (e) => {

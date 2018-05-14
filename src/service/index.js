@@ -1,5 +1,6 @@
 import axios from "axios";
 import qs from "qs";
+import history from '../Router/history';
 
 const axiosInstance = axios.create({
   baseURL: "http://api-dev.ebanjia.cn",
@@ -39,16 +40,18 @@ axiosInstance.interceptors.request.use(
 //返回状态判断(添加响应拦截器)
 axiosInstance.interceptors.response.use(
   res => {
-    console.log(res)
-    //对响应数据做些事
-    if (res.data.code !== 0) {
+    //是否登录或者授权
+    if (res.data.code === 6004) {//跳转登录页面
+      history.replace('/login');
+    }else if (res.data.code === 6005) {
+      window.location.href = 'http://oauth.ebanjia.cn/oauth?redirect_url=http://localhost:3000/#/login'
+    }else if (res.data.code !== 0) {
       return Promise.reject(res.data);
     }
     return res;
   },
   error => {
     console.error(error)
-
     // 返回 response 里的错误信息
     return Promise.reject( error);
   }

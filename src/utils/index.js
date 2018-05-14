@@ -1,3 +1,5 @@
+export const KEY_UID = 'uid';
+export const KEY_TOKEN = 'token';
 
 export function throttle(fn, gapTime) {
     if (gapTime == null || gapTime == undefined) {

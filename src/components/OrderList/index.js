@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './index.css';
 import {Icon, Menu, List, Button, WingBlank} from 'antd-mobile';
 import OrderItem from './OrderItem'
-import NaviBar from '../Common/NaviBar';
 
 const menu_data = [
   {
