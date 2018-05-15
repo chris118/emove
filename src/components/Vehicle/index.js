@@ -7,7 +7,6 @@ import {getUid, getToken} from '../../utils'
 
 import './index.css';
 
-
 const menu_data = [
   {
     value: 'order',
@@ -89,7 +88,6 @@ class Vehicle extends Component {
     if(this.state.menu_value[0] !== "none"){
       order = this.state.menu_value[0]
     }
-    console.log(order)
     let that = this
     Get("/cart/fleet", {order_by_field : order} )
       .then(function (res) {
@@ -136,13 +134,14 @@ class Vehicle extends Component {
       }
     });
 
+    console.log(this.state.checkIndex)
     const listItems = this.state.data.map((item, index) =>
       {
         return <VehicleItem
           move_date = {this.state.move_date}
           data={item}
           key={index}
-          checked={this.state.checkIndex === index ? true : false}
+          checked={this.state.checkIndex  === index ? true : false}
           onChecked={(checked) => {
             this.setState({
               checkIndex: index,
