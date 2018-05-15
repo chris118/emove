@@ -54,14 +54,30 @@ class Info extends Component {
           })
         })
 
+        let cart_time = res.result.cart_time
+        const nowTimeStamp = Date.now();
+        let date = new Date(nowTimeStamp);
+
+        if(cart_time != null){
+          date = new Date(res.result.cart_time.year,res.result.cart_time.month-1,res.result.cart_time.day)
+          that.setState({
+            date: date,
+            time: [parseInt(res.result.cart_time.time_slot_id)],
+          })
+        }
+
+        if(res.result.cart_contacts != null){
+          that.setState({
+            date: date,
+            manager: res.result.cart_contacts.user_name,
+            mobile: res.result.cart_contacts.user_telephone,
+            user_note:res.result.cart_contacts.user_note,
+            is_invoice: [res.result.cart_contacts.is_invoice],
+          })
+        }
         that.setState({
-          date: new Date(res.result.cart_time.year,res.result.cart_time.month-1,res.result.cart_time.day),
-          manager: res.result.cart_contacts.user_name,
-          mobile: res.result.cart_contacts.user_telephone,
+          date: date,
           time_slot: time_slot,
-          time: [parseInt(res.result.cart_time.time_slot_id)],
-          user_note:res.result.cart_contacts.user_note,
-          is_invoice: [res.result.cart_contacts.is_invoice],
         })
       })
       .catch(function (error) {

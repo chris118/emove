@@ -6,40 +6,15 @@ import {Get} from '../../service'
 
 const menu_data = [
   {
-    value: '1',
-    label: '所有订单',
+    value: 'none',
+    label: '全部订单',
   }, {
-    value: '2',
-    label: '已完成',
+    value: 'finish',
+    label: '完成订单',
   },
   {
-    value: '3',
-    label: '未完成',
-  },
-];
-
-const data = [
-  {
-    name: 'aaaaa',
-
-  }, {
-    name: 'bbbbb',
-  },
-  {
-    name: 'ccccc',
-  },
-  {
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
+    value: 'wait',
+    label: '未完成订单',
   },
 ];
 
@@ -49,7 +24,8 @@ class OrderList extends Component {
     this.state = {
       menu_data: menu_data,
       menu_show: false,
-      menu_value: ['1'],
+      menu_value: ['none'],
+      data: [],
     };
   }
 
@@ -71,7 +47,6 @@ class OrderList extends Component {
   }
 
   onMenuChange = (value) => {
-    console.log(value)
     this.setState({
       menu_value: value,
     });
@@ -79,18 +54,29 @@ class OrderList extends Component {
     this.setState({
       menu_show: false,
     });
+
+    this.loadData()
   }
 
   loadData = () => {
+    let order_status = ""
+    if(this.state.menu_value[0] !== "none"){
+      order_status = this.state.menu_value[0]
+    }
+
+    console.log(order_status)
     let that = this
     let date = {
       page:1,
-      order_status:""
+      order_status: order_status
     }
     Get("/get/orders", date )
       .then(function (res) {
         console.log(res.result)
         const {result} = res
+        that.setState({
+          data: result,
+        });
       })
       .catch(function (error) {
         console.error(error)
@@ -117,7 +103,7 @@ class OrderList extends Component {
       }
     });
 
-    const listItems = data.map((item, index) =>
+    const listItems = this.state.data.map((item, index) =>
       {
         return <OrderItem data={item} key={index}/>
       }
