@@ -14,42 +14,17 @@ class CartGoods extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      cart_list: []
-    };
+    // this.state = {
+    //   cart_list: [] //购物车里有多少种物品
+    // };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log(nextProps.items)
   }
 
   componentWillMount() {
-    //整理数据
-    let itmes =  this.props.items.forEach((item) => {
-
-      //是否在cart_list里
-      let bFound = false
-      this.state.cart_list.forEach((cart_item) => {
-        if(cart_item.goods_id === item.goods_id){
-          bFound = true
-        }
-      })
-
-      if(bFound === true){ //如果在更新数字
-        this.state.cart_list.forEach((cart_item, index) => {
-          if(cart_item.goods_id === item.goods_id){
-            const list = this.state.cart_list
-            list[index].number = list[index].number + 1
-            this.setState({
-              cart_list: list
-            })
-          }
-        })
-      }else {// 不在则插入一条
-        let newItem = Object.assign(item, {number: 1})
-        const list = this.state.cart_list
-        list.push(newItem)
-        this.setState({
-          cart_list: list
-        })
-      }
-    })
+    // this.updateCartItems(this.props.items)
   }
 
   onPrevious = () => {
@@ -65,23 +40,56 @@ class CartGoods extends Component {
   }
 
   plus = (number, item) => {
+    item['goods_num'] = number
     let { addChart } = this.props;
     addChart(item)
   }
 
   minus = (number, item) => {
+    item['goods_num'] = number
     let { removeChart } = this.props;
     removeChart(item)
   }
 
-
+  // //购物车里有多少种物品
+  // updateCartItems = (items) => {
+  //   items.forEach((item) => {
+  //     //是否在cart_list里
+  //     let bFound = false
+  //     this.state.cart_list.forEach((cart_item) => {
+  //       if(cart_item.goods_id === item.goods_id){
+  //         bFound = true
+  //       }
+  //     })
+  //
+  //     if(bFound === false){//不在则插入一条
+  //       const list = this.state.cart_list
+  //       list.push(item)
+  //       this.setState({
+  //         cart_list: list
+  //       })
+  //     }
+  //   })
+  // }
+  //
+  // //每种物品的数量
+  // getNumber = (item) => {
+  //   let count = 0;
+  //   this.props.items.forEach((cart_item) => {
+  //     if(cart_item.goods_id === item.goods_id){
+  //       count++
+  //     }
+  //   })
+  //
+  //   return count
+  // }
   render() {
-    const listItems = this.state.cart_list.map((item, index) =>
+    const listItems = this.props.items.map((item, index) =>
       {
         return <Item type={0} key={index}
                      extra={
                        <IndexStepper
-                         number={item.number}
+                         number={item.goods_num}
                          plus={(number) => this.plus(number, item)}
                          minus={(number) => this.minus(number, item)}/>}>
           {item.goods_name}
@@ -102,6 +110,7 @@ class CartGoods extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state)
   // state === reducer
   return {
     items: state.chart,

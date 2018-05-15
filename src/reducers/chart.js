@@ -3,26 +3,37 @@ import {ADD_CHART, REMOVE_CHART} from '../actions/actions-type'
 export default function chart(state = [], action = {}) {
   switch (action.type){
     case ADD_CHART:
-      let addState = state.concat(action.payload.item)
-      console.log(addState)
-      return addState
-    case REMOVE_CHART:
-      let newState = []
-      let bRemoved = false
-      for(let i = 0; i < state.length; i++){
-        if(state[i].goods_id === action.payload.item.goods_id){
-          if(!bRemoved){ //continue代表已经删除了
-            bRemoved = true;
-            continue
-          }else {
-            newState.push(state[i])
-          }
-        }else {
-          newState.push(state[i])
+      let bFound = false
+      state.forEach((item) => { //更新数字
+        if(item.goods_id === action.payload.item.goods_id) {
+          bFound = true
+          item.goods_num = action.payload.item.goods_num
         }
+      })
+      if(!bFound) { //新添加
+        state.push(action.payload.item)
       }
-      console.log(newState)
+
+      let newState = []
+      state.forEach((item) => {
+        newState.push(item)
+      })
+
+      // console.log(newState)
       return newState
+    case REMOVE_CHART:
+      state.forEach((item) => {
+        if(item.goods_id === action.payload.item.goods_id) {
+          item.goods_num = action.payload.item.goods_num //更新数字
+        }
+      })
+
+      let removeState = []
+      state.forEach((item) => {
+        removeState.push(item)
+      })
+      console.log(removeState)
+      return removeState
     default:
       return state;
   }

@@ -52,7 +52,7 @@ class Login extends Component {
 
       let that = this
       let interval = setInterval(function () {
-        console.log(that.state.timeLeft)
+        // console.log(that.state.timeLeft)
         if (that.state.timeLeft === 0) {
           clearInterval(interval);
           that.setState({

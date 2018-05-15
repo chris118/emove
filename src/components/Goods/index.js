@@ -21,6 +21,8 @@ class Goods extends Component {
       all_goods: [],
       cart_goods: [],
       isOpen: false,
+      category_height_list: [],
+      selected_index: 0,
     };
   }
 
@@ -29,41 +31,33 @@ class Goods extends Component {
   }
 
   componentDidMount() {
+    //滚动事件
+    let that = this
     this.rightDiv.addEventListener('scroll', () => {
       //滚动到的类别index
       var index = 0;
-
-      let category_height_list = []
-      for(let i = 0; i < this.state.second_category.length; i++){
-         const {category_id} = this.state.second_category[i]
-         let sub_item_count = 0
-        for(let i = 0; i < this.state.all_goods.length; i++) {
-          const {parent_category_id} = this.state.all_goods[i]
-          if(category_id === parent_category_id){
-            sub_item_count++;
-          }
-        }
-        category_height_list.push(44*(sub_item_count + 1))
-      }
       let total_height = 0;
-      for(let i = 0; i < category_height_list.length; i++) {
-        total_height += category_height_list[i]
+      for(let i = 0; i < that.state.category_height_list.length; i++) {
+        total_height += that.state.category_height_list[i]
         if(this.rightDiv.scrollTop >= total_height){
           index = i+1;
         }
       }
 
-      let { goodsIndexChanged } = this.props;
+      let { goodsIndexChanged } = that.props;
       goodsIndexChanged(index)
     });
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.selected_index === 0){
-      this.rightDiv.scrollTop = 0;
-    } if(nextProps.selected_index === 1){
-      this.rightDiv.scrollTop = 44*11;
+    //点击左侧类别列表，自动滚动到指定位置
+    if(nextProps.selected_index !== this.state.selected_index){
+      this.autoScroll(nextProps.selected_index)
+      this.setState({
+        selected_index: nextProps.selected_index
+      })
     }
+
   }
 
   loadData() {
@@ -71,11 +65,36 @@ class Goods extends Component {
     Get("/cart/goods", {} )
       .then(function (res) {
         console.log(res)
-        const {first_category, second_category, all_goods} = res.result;
+        const {first_category, second_category, all_goods, cart_goods} = res.result;
         that.setState({
           first_category: first_category,
           second_category: second_category,
-          all_goods: all_goods
+          all_goods: all_goods,
+          cart_goods: cart_goods
+        })
+
+        //初始化购物车
+        let { addChart } = that.props;
+        cart_goods.forEach((item) => {
+          addChart(item)
+        })
+
+        //初始化高度列表
+        let category_height_list = []
+        for(let i = 0; i < second_category.length; i++){
+          const {category_id} = second_category[i]
+          let sub_item_count = 0
+          for(let i = 0; i < all_goods.length; i++) {
+            const {parent_category_id} = all_goods[i]
+            if(category_id === parent_category_id){
+              sub_item_count++;
+            }
+          }
+          category_height_list.push(44*(sub_item_count + 1))
+        }
+
+        that.setState({
+          category_height_list: category_height_list
         })
       })
       .catch(function (error) {
@@ -109,8 +128,14 @@ class Goods extends Component {
     //恢复滚动
     this.rightDiv.style.overflow = 'auto'
     this.leftDiv.style.overflow = 'auto'
+  }
 
-    this.loadData();
+  autoScroll = (index)=> {
+    let total_height = 0;
+    for(let i = 0; i < index; i++) {
+      total_height += this.state.category_height_list[i]
+    }
+    this.rightDiv.scrollTop = total_height
   }
 
   render() {
@@ -123,8 +148,7 @@ class Goods extends Component {
           </div>
           <div className="right" ref={(right) => { this.rightDiv = right; }}>
             <GoodsList  data={{all_goods: this.state.all_goods,
-                                second_category: this.state.second_category,
-                                cart_goods: this.state.cart_goods}}/>
+                                second_category: this.state.second_category}}/>
           </div>
         </div>
         <div className="goods-cart" style={{visibility: this.state.isOpen?'hidden':'visible'}} >
@@ -139,7 +163,6 @@ class Goods extends Component {
 }
 
 const mapStateToProps = (state) => {
-  // state === reducer
   return {
     selected_index: state.goods_list.selected_index, //goodsIndexTapChanged触发改变，滚动到指定位置
     chart_items: state.chart

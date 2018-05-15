@@ -3,7 +3,7 @@ import {Badge} from 'antd-mobile';
 import NaviBar from '../../Common/NaviBar';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {addChart} from '../../../actions/actions'
+import {addChart, removeChart} from '../../../actions/actions'
 
 import './index.css';
 
@@ -28,16 +28,12 @@ class Cart extends Component {
   }
 
   componentWillMount() {
-    this.setState({
-      number: this.props.items.length
-    })
+    this.updateUI(this.props.items)
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log(nextProps.items)
-    this.setState({
-      number: nextProps.items.length
-    })
+    this.updateUI(nextProps.items)
+
   }
 
   onPrevious = () => {
@@ -50,6 +46,25 @@ class Cart extends Component {
 
   onCartClick = () => {
     this.props.onCartClick()
+  }
+
+  updateUI = (items) => {
+    let number = 0
+    items.forEach((item) => {
+      number += item.goods_num
+    })
+    this.setState({
+      number: number
+    })
+
+    let bulk = 0
+    items.forEach((cart_item) => {
+      bulk += cart_item.goods_cubage * cart_item.goods_num
+    })
+
+    this.setState({
+      bulk: bulk.toFixed(1)
+    })
   }
 
   render() {
@@ -74,6 +89,7 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => {
   // state === reducer
+  // console.log(state)
   return {
     items: state.chart,
   };
@@ -82,6 +98,8 @@ const mapStateToProps = (state) => {
 function mapDispatchToProps(dispatch) {
   return {
     addChart: bindActionCreators(addChart, dispatch),
+    removeChart: bindActionCreators(removeChart, dispatch),
+
   }
 }
 

@@ -20,8 +20,7 @@ class CategoryList extends Component {
   itemClicked = (e, index) => {
     e.preventDefault();
     let { goodsIndexTapChanged } = this.props;
-    console.log(goodsIndexTapChanged)
-    goodsIndexTapChanged(index - 1) //计算出选择的index
+    goodsIndexTapChanged(index)
   }
 
   render() {

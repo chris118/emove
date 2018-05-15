@@ -18,6 +18,13 @@ class Stepper extends Component {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      number: nextProps.number
+    })
+  }
+
+
   plus = (event) => {
     event.preventDefault();
     this.setState({
