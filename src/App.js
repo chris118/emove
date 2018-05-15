@@ -29,7 +29,7 @@ class App extends Component {
             <Route path='/infoex' component={authHOC(InfoEx)}/>
             <Route path='/goods' component={authHOC(Goods)}/>
             <Route path='/vehicle' component={authHOC(Vehicle)}/>
-            <Route path='/order' component={authHOC(Order)}/>
+            <Route path='/order/:id' component={authHOC(Order)}/>
             <Route path='/orderlist' component={authHOC(OrderList)}/>
           </Switch>
         </Router>

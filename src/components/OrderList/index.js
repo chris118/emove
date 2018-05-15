@@ -57,6 +57,9 @@ class OrderList extends Component {
 
     this.loadData()
   }
+  detailClicked = (item) => {
+    this.props.history.push('/order/' + item.order_id);
+  }
 
   loadData = () => {
     let order_status = ""
@@ -105,7 +108,7 @@ class OrderList extends Component {
 
     const listItems = this.state.data.map((item, index) =>
       {
-        return <OrderItem data={item} key={index}/>
+        return <OrderItem data={item} key={index} detailClicked={() => {this.detailClicked(item)}}/>
       }
     );
     return (

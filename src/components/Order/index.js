@@ -28,12 +28,15 @@ class Order extends Component {
       base_info:[],
       goods_info:[],
       total_info:[],
-
     };
   }
 
   componentDidMount() {
-    this.loadData()
+    if (typeof(this.props.match.params.id) == "undefined"){
+      this.loadData()
+    }else {
+      this.loadDataWithOrderId(this.props.match.params.id)
+    }
   }
 
   submitOrder = () => {
@@ -88,6 +91,37 @@ class Order extends Component {
           total_info:result.total_info,
 
         })
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
+
+  loadDataWithOrderId = (id) => {
+    let that = this
+    Get("/get/order", {order_id: id} )
+      .then(function (res) {
+        console.log(res.result)
+        // const {result} = res
+        // that.setState({
+        //   user_name:result.user_name,
+        //   user_telephone:result.user_telephone,
+        //   moving_time:result.moving_time,
+        //   moveout_address:result.moveout_address,
+        //   moveout_distance_meter:result.moveout_distance_meter,
+        //   moveout_is_elevator:result.moveout_is_elevator,
+        //   movein_address:result.movein_address,
+        //   movein_distance_meter:result.movein_distance_meter,
+        //   movein_is_elevator:result.movein_is_elevator,
+        //   is_invoice:result.is_invoice,
+        //   fleet_name:result.fleet_name,
+        //   fleet_telephone:result.fleet_telephone,
+        //   fleet_address:result.fleet_address,
+        //   base_info:result.base_info,
+        //   goods_info:result.goods_info,
+        //   total_info:result.total_info,
+        //
+        // })
       })
       .catch(function (error) {
         console.error(error)

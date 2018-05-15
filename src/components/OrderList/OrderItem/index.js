@@ -4,6 +4,12 @@ import {Button} from 'antd-mobile';
 import './index.css';
 
 class OrderList extends Component {
+
+  detailClicked = (event) => {
+    event.preventDefault();
+    this.props.detailClicked()
+  }
+
   render() {
     let status = "未知"
     if(this.props.data.order_status == 'wait'){
@@ -42,7 +48,7 @@ class OrderList extends Component {
             <div className="orderitem-time-value">{this.props.data.moving_time}<span>{" "}</span>{this.props.data.time_slot_title}</div>
           </div>
           <div className="orderitem-detai-btn">
-            <Button type="ghost" inline size="small">订单详情</Button>
+            <Button type="ghost" inline size="small" onClick={this.detailClicked}>订单详情</Button>
           </div>
         </div>
         <div className="orderitem-sub"></div>
