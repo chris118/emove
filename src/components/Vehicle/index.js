@@ -2,52 +2,24 @@ import React, {Component} from 'react';
 import {Icon, Menu, List} from 'antd-mobile';
 import VehicleItem from './VehicleItem'
 import NaviBar from '../Common/NaviBar';
+import {Get, Post} from '../../service'
+import {getUid, getToken} from '../../utils'
 
 import './index.css';
 
 
 const menu_data = [
-
   {
-    value: '1',
-    label: '智能排序',
+    value: 'order',
+    label: '订单最多',
   },{
-    value: '2',
-    label: '距离',
+    value: 'evaluate',
+    label: '评分最高',
   }, {
-    value: '3',
-    label: '时间',
-  },
-  {
-    value: '4',
-    label: '点评',
-  },
-];
-
-const data = [
-  {
-    name: 'aaaaa',
-
-  }, {
-    name: 'bbbbb',
-  },
-  {
-    name: 'ccccc',
-  },
-  {
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },{
-    name: 'ccccc',
-  },
-];
+    value: 'none',
+    label: '离我最近',
+  }
+]
 
 class Vehicle extends Component {
   constructor(props) {
@@ -55,8 +27,34 @@ class Vehicle extends Component {
     this.state = {
       menu_data: menu_data,
       menu_show: false,
-      menu_value: ['1']
+      menu_value: ['order'],
+      checkIndex: 0,
+      data: []
     };
+  }
+
+  componentDidMount() {
+    this.loadData()
+  }
+
+  loadData = () => {
+    let that = this
+    let order = ""
+    if(this.state.menu_value[0] !== "none"){
+      order = this.state.menu_value[0]
+    }
+    console.log(order)
+    Get("/cart/fleet", {order_by_field : order} )
+      .then(function (res) {
+        console.log(res.result.usable_fleet)
+        that.setState({
+          checkIndex: res.result.selected_fleet_id,
+          data: res.result.usable_fleet
+        })
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
   }
 
   onPrevious = () => {
@@ -86,6 +84,7 @@ class Vehicle extends Component {
     this.setState({
       menu_show: false,
     });
+    this.loadData()
   }
 
   render() {
@@ -107,9 +106,17 @@ class Vehicle extends Component {
       }
     });
 
-    const listItems = data.map((item, index) =>
+    const listItems = this.state.data.map((item, index) =>
       {
-        return <VehicleItem data={item} key={index}/>
+        return <VehicleItem
+          data={item}
+          key={index}
+          checked={this.state.checkIndex === index ? true : false}
+          onChecked={(checked) => {
+            this.setState({
+              checkIndex: index
+            })
+          }}/>
       }
     );
 

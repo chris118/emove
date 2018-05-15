@@ -14,3 +14,8 @@ body {
   text-align: center;
   line-height: 90px;
 }
+.navibar {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}

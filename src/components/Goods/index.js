@@ -7,7 +7,7 @@ import {goodsIndexChanged, addChart} from '../../actions/actions'
 import Cart from './Cart'
 import CartGoods from './CartGoods'
 import Modal from '../Common/Modal';
-import {Get, Post} from '../../service'
+import {Get} from '../../service'
 
 import './index.css';
 
@@ -57,7 +57,6 @@ class Goods extends Component {
         selected_index: nextProps.selected_index
       })
     }
-
   }
 
   loadData() {

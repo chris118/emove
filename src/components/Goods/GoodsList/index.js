@@ -16,13 +16,9 @@ const StyledItem = styled(Item) `
     background: ${props => props.type === 1 ? '#F2F2F2' : 'white'};
   `
 class GoodsList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillReceiveProps(nextProps){
     if(this.props.chart_items !== nextProps.chart_items){
-      this.updateCart(nextProps.chart_items)
+      // this.updateCart(nextProps.chart_items)
     }
   }
 
@@ -38,24 +34,32 @@ class GoodsList extends Component {
     item['goods_num'] = number
     let { removeChart } = this.props;
     removeChart(item)
+
+    this.updateCart()
   }
 
   //更新服务端购物车数据
-  updateCart = (chart_items) => {
-    let cart_data = JSON.stringify(chart_items)
+  updateCart = () => {
+    let cart_data = []
+    this.props.chart_items.forEach((item) => {
+      let item_data = {}
+      item_data['goods_id'] = item.goods_id
+      item_data['goods_num'] = item.goods_num
+      cart_data.push(item_data)
+    })
 
     let data = {}
     data['uid'] = getUid()
     data['token'] = getToken()
-    data['goods'] = cart_data
+    data['goods'] = JSON.stringify(cart_data)
 
-    // Post("/cart/goods",data)
-    //   .then(function (res) {
-    //     console.log(res)
-    //   })
-    //   .catch(function (error) {
-    //     console.error(error);
-    //   });
+    Post("/cart/goods",data)
+      .then(function (res) {
+        console.log(res)
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   }
 
   //每种物品的数量

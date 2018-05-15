@@ -41,13 +41,13 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   res => {
     //是否登录或者授权
-    if (res.data.code === 6004) {//跳转登录页面
-      history.replace('/login');
-    }else if (res.data.code === 6005) {
-      window.location.href = 'http://oauth.ebanjia.cn/oauth?redirect_url=' + encodeURIComponent('http://localhost:3000/#/login')
-    }else if (res.data.code !== 0) {
-      return Promise.reject(res.data);
-    }
+    // if (res.data.code === 6004) {//跳转登录页面
+    //   history.replace('/login');
+    // }else if (res.data.code === 6005) {
+    //   window.location.href = 'http://oauth.ebanjia.cn/oauth?redirect_url=' + encodeURIComponent('http://localhost:3000/#/login')
+    // }else if (res.data.code !== 0) {
+    //   return Promise.reject(res.data);
+    // }
     return res;
   },
   error => {
@@ -56,7 +56,6 @@ axiosInstance.interceptors.response.use(
     return Promise.reject( error);
   }
 );
-
 
 export function Get(url, params) {
   return new Promise((resolve, reject) => {

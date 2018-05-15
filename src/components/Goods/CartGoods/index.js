@@ -5,28 +5,14 @@ import IndexStepper from '../../Common/Stepper/index'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {addChart, removeChart} from '../../../actions/actions'
+import {Post} from '../../../service'
+import {getUid, getToken} from '../../../utils'
 
 import './index.css';
 //测试数据
 const Item = List.Item;
 
 class CartGoods extends Component {
-  constructor(props) {
-    super(props);
-
-    // this.state = {
-    //   cart_list: [] //购物车里有多少种物品
-    // };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // console.log(nextProps.items)
-  }
-
-  componentWillMount() {
-    // this.updateCartItems(this.props.items)
-  }
-
   onPrevious = () => {
     this.props.onPrevious()
   }
@@ -43,48 +29,43 @@ class CartGoods extends Component {
     item['goods_num'] = number
     let { addChart } = this.props;
     addChart(item)
+
+    this.updateCart()
   }
 
   minus = (number, item) => {
     item['goods_num'] = number
     let { removeChart } = this.props;
     removeChart(item)
+
+    this.updateCart()
   }
 
-  // //购物车里有多少种物品
-  // updateCartItems = (items) => {
-  //   items.forEach((item) => {
-  //     //是否在cart_list里
-  //     let bFound = false
-  //     this.state.cart_list.forEach((cart_item) => {
-  //       if(cart_item.goods_id === item.goods_id){
-  //         bFound = true
-  //       }
-  //     })
-  //
-  //     if(bFound === false){//不在则插入一条
-  //       const list = this.state.cart_list
-  //       list.push(item)
-  //       this.setState({
-  //         cart_list: list
-  //       })
-  //     }
-  //   })
-  // }
-  //
-  // //每种物品的数量
-  // getNumber = (item) => {
-  //   let count = 0;
-  //   this.props.items.forEach((cart_item) => {
-  //     if(cart_item.goods_id === item.goods_id){
-  //       count++
-  //     }
-  //   })
-  //
-  //   return count
-  // }
+  //更新服务端购物车数据
+  updateCart = () => {
+    let cart_data = []
+    this.props.chart_items.forEach((item) => {
+      let item_data = {}
+      item_data['goods_id'] = item.goods_id
+      item_data['goods_num'] = item.goods_num
+      cart_data.push(item_data)
+    })
+
+    let data = {}
+    data['uid'] = getUid()
+    data['token'] = getToken()
+    data['goods'] = JSON.stringify(cart_data)
+
+    Post("/cart/goods",data)
+      .then(function (res) {
+        console.log(res)
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
   render() {
-    const listItems = this.props.items.map((item, index) =>
+    const listItems = this.props.chart_items.map((item, index) =>
       {
         return <Item type={0} key={index}
                      extra={
@@ -113,7 +94,7 @@ const mapStateToProps = (state) => {
   console.log(state)
   // state === reducer
   return {
-    items: state.chart,
+    chart_items: state.chart,
   };
 };
 

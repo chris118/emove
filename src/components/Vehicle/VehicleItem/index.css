@@ -38,12 +38,12 @@ body {
 .vehicle-name {
   font-size: 18px;
   margin-top: 15px;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 }
 .vehicle-info {
   display: flex;
   color: #CDCDCD;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 }
 .vehicle-check {
   position: absolute;
@@ -83,7 +83,6 @@ body {
   float: left;
   font-size: 12px;
   margin: 1px;
-  color: #FDC02E;
   cursor: pointer;
 }
 /*五角星样式*/
