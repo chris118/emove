@@ -72,8 +72,7 @@ class VehicleItem extends Component {
         stars.push(s)
       }
     }
-    const today = new Date()
-    const date = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDay()
+
     return (
       <div className="vehicle-item-root" onClick={this.itemClicked}>
         <div className="top">
@@ -92,7 +91,7 @@ class VehicleItem extends Component {
           </div>
           <div className="top-right">
             <Checkbox className="vehicle-check" checked={this.state.checked}/>
-            <div className="vehicle-time">{date}仅剩车次{this.state.order_count}</div>
+            <div className="vehicle-time">{this.props.move_date}仅剩车次{this.state.order_count}</div>
           </div>
         </div>
         <div className="bottom">

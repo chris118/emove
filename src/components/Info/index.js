@@ -38,14 +38,14 @@ class Info extends Component {
     super(props);
 
     this.state = {
-      address_out: "上海",
+      address_out: "",
       address_out_selected: false,
       elevator_out: [1],
       floor_out: [1],
       assemble_out: [0],
       distance_out: undefined,
 
-      address_in: "上海",
+      address_in: "",
       address_in_selected: false,
       elevator_in: [1],
       floor_in: [1],

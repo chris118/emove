@@ -29,6 +29,8 @@ class Vehicle extends Component {
       menu_show: false,
       menu_value: ['order'],
       checkIndex: 0,
+      selected_fleet_id: 0,
+      move_date: "",
       data: []
     };
   }
@@ -37,32 +39,27 @@ class Vehicle extends Component {
     this.loadData()
   }
 
-  loadData = () => {
-    let that = this
-    let order = ""
-    if(this.state.menu_value[0] !== "none"){
-      order = this.state.menu_value[0]
-    }
-    console.log(order)
-    Get("/cart/fleet", {order_by_field : order} )
-      .then(function (res) {
-        console.log(res.result.usable_fleet)
-        that.setState({
-          checkIndex: res.result.selected_fleet_id,
-          data: res.result.usable_fleet
-        })
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
-  }
-
   onPrevious = () => {
     this.props.history.goBack();
   }
 
   onNext = () => {
-    this.props.history.push('/order');
+    //更新信息到服务器
+    let data = {}
+    data['uid'] = getUid()
+    data['token'] = getToken()
+    data['fleet_id'] = this.state.selected_fleet_id
+
+    console.log(data)
+    let that = this
+    Post("/cart/fleet",data)
+      .then(function (res) {
+        console.log(res)
+        that.props.history.push('/order');
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   }
 
   menuClick = () => {
@@ -87,6 +84,39 @@ class Vehicle extends Component {
     this.loadData()
   }
 
+  loadData = () => {
+    let order = ""
+    if(this.state.menu_value[0] !== "none"){
+      order = this.state.menu_value[0]
+    }
+    console.log(order)
+    let that = this
+    Get("/cart/fleet", {order_by_field : order} )
+      .then(function (res) {
+        console.log(res.result)
+        that.setState({
+          selected_fleet_id: res.result.selected_fleet_id,
+          move_date:  res.result.move_date,
+          data: res.result.usable_fleet,
+          checkIndex: that.getIndexOfSelected(res.result.usable_fleet, res.result.selected_fleet_id)
+        })
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
+
+  getIndexOfSelected = (items, selected_fleet_id) => {
+    let index = 0;
+    for(let i = 0; i < items.length; i++){
+      if(items[i].fleet_id == selected_fleet_id){
+        break
+      }
+      index++;
+    }
+    return index
+  }
+
   render() {
     const { menu_data, menu_show, menu_value } = this.state;
     const menuEl = (
@@ -109,12 +139,14 @@ class Vehicle extends Component {
     const listItems = this.state.data.map((item, index) =>
       {
         return <VehicleItem
+          move_date = {this.state.move_date}
           data={item}
           key={index}
           checked={this.state.checkIndex === index ? true : false}
           onChecked={(checked) => {
             this.setState({
-              checkIndex: index
+              checkIndex: index,
+              selected_fleet_id: item.fleet_id
             })
           }}/>
       }

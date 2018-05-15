@@ -79,15 +79,13 @@ class Info extends Component {
     data['uid'] = getUid()
     data['token'] = getToken()
     data['year'] = this.state.date.getFullYear()
-    data['month'] = this.state.date.getMonth()
-    data['day'] = this.state.date.getDay()
+    data['month'] = this.state.date.getMonth() + 1
+    data['day'] = this.state.date.getDate()
     data['time_slot_id'] = this.state.time[0]
     data['user_name'] = this.state.manager
     data['user_telephone'] = this.state.mobile
     data['is_invoice'] = this.state.is_invoice[0]
     data['user_note'] = this.state.user_note
-
-    console.log(data)
 
     let that = this
     Post("/cart/time",data)
