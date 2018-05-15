@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './index.css';
 import {Icon, Menu, List, Button, WingBlank} from 'antd-mobile';
 import OrderItem from './OrderItem'
+import {Get} from '../../service'
 
 const menu_data = [
   {
@@ -52,6 +53,11 @@ class OrderList extends Component {
     };
   }
 
+  componentDidMount() {
+    this.loadData()
+  }
+
+
   menuClick = () => {
     this.setState({
       menu_show: !this.state.menu_show,
@@ -74,6 +80,23 @@ class OrderList extends Component {
       menu_show: false,
     });
   }
+
+  loadData = () => {
+    let that = this
+    let date = {
+      page:1,
+      order_status:""
+    }
+    Get("/get/orders", date )
+      .then(function (res) {
+        console.log(res.result)
+        const {result} = res
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }
+
 
   render() {
     const menuEl = (
