@@ -20,10 +20,11 @@ class Login extends Component {
 
     this.state = {
       open_id: open_id,
-      mobile:"15618516930",
+      mobile:"",
       timeLeft: 5,
       begin: 0,
-      verifyEnable:true
+      verifyEnable:true,
+      verifyCode: "",
     };
   }
 
@@ -52,7 +53,6 @@ class Login extends Component {
 
       let that = this
       let interval = setInterval(function () {
-        // console.log(that.state.timeLeft)
         if (that.state.timeLeft === 0) {
           clearInterval(interval);
           that.setState({
@@ -80,7 +80,7 @@ class Login extends Component {
     let that = this
     Post("/code/login", {
       username: this.state.mobile,
-      code: '123456',
+      code: this.state.verifyCode,
       openid: this.state.open_id
     })
     .then(function (res) {
@@ -96,11 +96,6 @@ class Login extends Component {
     });
   }
 
-  phoneOnChange = (e) => {
-    this.setState({
-      mobile: e
-    })
-  }
   render() {
     return (
       <div className="flex-container">
@@ -109,8 +104,15 @@ class Login extends Component {
         <WingBlank size="sm">
           <InputItem
             placeholder="请输入手机号"
+            type="phone"
             value={this.state.mobile}
-            onChange={this.phoneOnChange}/>
+            onChange={ (v) => {
+              let trim_v = v.replace(/(^\s+)|(\s+$)/g,"");
+              trim_v = trim_v.replace(/\s/g,"");
+              this.setState({
+                mobile: trim_v
+              })
+            }}/>
         </WingBlank>
         <WhiteSpace size="lg" />
 
@@ -121,7 +123,13 @@ class Login extends Component {
             <InputItem
               className="input-item"
               type="number"
-              placeholder="请输入验证码"/>
+              placeholder="请输入验证码"
+              value={this.state.verifyCode}
+              onChange={ (v) => {
+                this.setState({
+                  verifyCode: v
+                })
+              }}/>
             <span className="verify-link" onClick={this.verifyCode}>
               { this.state.begin === 0 ? '获取验证码' : this.state.timeLeft}
             </span>

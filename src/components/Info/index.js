@@ -55,8 +55,12 @@ class Info extends Component {
   }
 
   componentDidMount() {
+    if(this.props.match.path === '/app/clear') { //提交完订单 如果返回就回首页
+      // do nothing
+    }else {
+      this.loadData()
+    }
     this.initMap()
-    this.loadData()
   }
 
   next = (event) => {
@@ -298,9 +302,12 @@ class Info extends Component {
         </List>
         <div className="info-tips">提示:预定完成后可拨打400-000-6668进行修改</div>
         <WhiteSpace size="xl"/>
-        <WingBlank>
-          <Button type="primary" onClick={this.next}>下一步</Button>
-        </WingBlank>
+        <div className="info-navibar">
+          <WingBlank>
+            <Button type="primary" onClick={this.next}>下一步</Button>
+          </WingBlank>
+        </div>
+
       </div>
     );
   }

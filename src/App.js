@@ -25,10 +25,13 @@ class App extends Component {
         <Router touchstart={this.touchstart} touchmove={this.touchmove} history={history} >
           <Switch>
             <Route path='/login' component={authHOC(Login)}/>
-            <Route path='/app' component={authHOC(Info)}/>
+            <Route exact path='/app' component={authHOC(Info)}/>
+            <Route path='/app/clear' component={authHOC(Info)}/>
             <Route path='/infoex' component={authHOC(InfoEx)}/>
             <Route path='/goods' component={authHOC(Goods)}/>
             <Route path='/vehicle' component={authHOC(Vehicle)}/>
+            <Route exact path='/order' component={authHOC(Order)}/>
+            <Route path='/order/submit' component={authHOC(Order)}/>
             <Route path='/order/:id' component={authHOC(Order)}/>
             <Route path='/orderlist' component={authHOC(OrderList)}/>
           </Switch>

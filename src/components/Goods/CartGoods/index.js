@@ -67,6 +67,9 @@ class CartGoods extends Component {
   render() {
     const listItems = this.props.chart_items.map((item, index) =>
       {
+        if(item.goods_num === 0){
+          return null
+        }
         return <Item type={0} key={index}
                      extra={
                        <IndexStepper

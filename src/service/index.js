@@ -45,6 +45,18 @@ axiosInstance.interceptors.response.use(
       history.replace('/login');
     }else if (res.data.code === 6005) {
       window.location.href = 'http://oauth.ebanjia.cn/oauth?redirect_url=' + encodeURIComponent('http://localhost:3000/#/login')
+    }else if(res.data.code === 6200){//搬家类型错误
+
+    }else if(res.data.code === 6201){//购物车数据过期
+
+    }else if(res.data.code === 6202){//未选择搬家地址
+
+    }else if(res.data.code === 6203){//未选择搬家物品
+
+    }else if(res.data.code === 6204){//未选择搬家时间
+
+    }else if(res.data.code === 6205){//未选择搬家车队
+
     }else if (res.data.code !== 0) {
       return Promise.reject(res.data);
     }

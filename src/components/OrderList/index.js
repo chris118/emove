@@ -57,8 +57,13 @@ class OrderList extends Component {
 
     this.loadData()
   }
+
   detailClicked = (item) => {
     this.props.history.push('/order/' + item.order_id);
+  }
+
+  telphone = () => {
+    window.location.href = "tel:400-000-6668";
   }
 
   loadData = () => {
@@ -125,7 +130,7 @@ class OrderList extends Component {
           </List>
         </div>
         <div className="orderlist-navibar">
-          <WingBlank><Button type="primary">拨打免费服务热线</Button></WingBlank>
+          <WingBlank><Button type="primary" onClick={this.telphone}>服务热线 400-000-6668</Button></WingBlank>
         </div>
         {menu_show ? menuEl : null}
         {menu_show ? <div className="menu-mask" onClick={this.onMaskClick} /> : null}

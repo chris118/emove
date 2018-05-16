@@ -107,7 +107,7 @@ class Vehicle extends Component {
   getIndexOfSelected = (items, selected_fleet_id) => {
     let index = 0;
     for(let i = 0; i < items.length; i++){
-      if(items[i].fleet_id == selected_fleet_id){
+      if(items[i].fleet_id === selected_fleet_id){
         break
       }
       index++;

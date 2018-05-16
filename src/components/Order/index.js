@@ -4,6 +4,7 @@ import NaviBar from '../Common/NaviBar';
 import {Get, Post} from '../../service'
 import {getUid, getToken} from '../../utils'
 
+
 import './index.css';
 
 class Order extends Component {
@@ -12,6 +13,7 @@ class Order extends Component {
 
     this.state = {
       isSubmit: false,
+      isDetail: false,
       user_name:"",
       user_telephone:"",
       moving_time:"",
@@ -31,31 +33,44 @@ class Order extends Component {
     };
   }
 
-  componentDidMount() {
-    if (typeof(this.props.match.params.id) == "undefined"){
+  componentWillMount() {
+    // console.log(this.props)
+    if(this.props.match.path === '/order/submit'){
+      // this.props.history.listen(() => {
+      //   if(this.props.history.action === "POP"){
+      //     // this.props.history.replace('/app/clear') //提交完订单 如果返回就回首页
+      //     this.props.history.push('/orderlist')
+      //   }
+      // });
+      this.setState({
+        isSubmit: true
+      })
+      this.loadData()
+    }else if(this.props.match.path === '/order'){
       this.loadData()
     }else {
+      this.setState({
+        isDetail: true
+      })
       this.loadDataWithOrderId(this.props.match.params.id)
     }
   }
 
   submitOrder = () => {
-    this.setState({
-      isSubmit: true
-    })
+    this.props.history.push('/order/submit')
 
-    let that = this
-    let data = {}
-    data['uid'] = getUid()
-    data['token'] = getToken()
-
-    Post("order/save",data)
-      .then(function (res) {
-        console.log(res)
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    // let that = this
+    // let data = {}
+    // data['uid'] = getUid()
+    // data['token'] = getToken()
+    //
+    // Post("order/save",data)
+    //   .then(function (res) {
+    //     console.log(res)
+    //   })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   });
   }
 
   onPrevious = () => {
@@ -102,26 +117,26 @@ class Order extends Component {
     Get("/get/order", {order_id: id} )
       .then(function (res) {
         console.log(res.result)
-        // const {result} = res
-        // that.setState({
-        //   user_name:result.user_name,
-        //   user_telephone:result.user_telephone,
-        //   moving_time:result.moving_time,
-        //   moveout_address:result.moveout_address,
-        //   moveout_distance_meter:result.moveout_distance_meter,
-        //   moveout_is_elevator:result.moveout_is_elevator,
-        //   movein_address:result.movein_address,
-        //   movein_distance_meter:result.movein_distance_meter,
-        //   movein_is_elevator:result.movein_is_elevator,
-        //   is_invoice:result.is_invoice,
-        //   fleet_name:result.fleet_name,
-        //   fleet_telephone:result.fleet_telephone,
-        //   fleet_address:result.fleet_address,
-        //   base_info:result.base_info,
-        //   goods_info:result.goods_info,
-        //   total_info:result.total_info,
-        //
-        // })
+        const {result} = res
+        that.setState({
+          user_name:result.user_name,
+          user_telephone:result.user_telephone,
+          moving_time:result.moving_time,
+          moveout_address:result.moveout_address,
+          moveout_distance_meter:result.moveout_distance_meter,
+          moveout_is_elevator:result.moveout_is_elevator,
+          movein_address:result.movein_address,
+          movein_distance_meter:result.movein_distance_meter,
+          movein_is_elevator:result.movein_is_elevator,
+          is_invoice:result.is_invoice,
+          fleet_name:result.fleet_name,
+          fleet_telephone:result.fleet_telephone,
+          fleet_address:result.fleet_address,
+          base_info:result.base_info,
+          goods_info:result.goods_info,
+          total_info:result.total_info,
+
+        })
       })
       .catch(function (error) {
         console.error(error)
@@ -134,6 +149,10 @@ class Order extends Component {
       navi = <WingBlank><Button type="primary" onClick={this.goOrderList}>订单管理</Button></WingBlank>
     }else {
       navi = <NaviBar onPrevious={this.onPrevious} onNext={this.submitOrder} nextTitle="提交订单"/>
+    }
+
+    if(this.state.isDetail) {
+      navi = <WingBlank><Button type="primary" onClick={this.onPrevious}>返回</Button></WingBlank>
     }
 
     let move_out_address = null
@@ -163,7 +182,7 @@ class Order extends Component {
               <div className="contact-sub-right-center">{item.value}{item.unit}</div>
             </div>
             <div className="contact-item33">
-              <div className="contact-sub-right-title">{item.subtitle}</div>
+              <div className="contact-sub-right-title" dangerouslySetInnerHTML={{__html:item.subtitle}}/>
             </div>
           </div>
         )
@@ -177,7 +196,7 @@ class Order extends Component {
               <div className="contact-sub-right-center">{item.value}{item.unit}</div>
             </div>
             <div className="contact-item33">
-              <div className="contact-sub-right-title">{item.subtitle}</div>
+              <div className="contact-sub-right-title" dangerouslySetInnerHTML={{__html:item.subtitle}}/>
             </div>
           </div>
         )
@@ -187,7 +206,7 @@ class Order extends Component {
     let goodsList = []
     this.state.goods_info.forEach((item, index) => {
       let goodsItem = null
-      if(this.state.base_info.length === index + 1){
+      if(this.state.goods_info.length === index + 1){
         goodsItem = (
           <div className="contact-item3-last" key={index}>
             <div className="contact-item11">
@@ -203,7 +222,7 @@ class Order extends Component {
         )
       }else {
         goodsItem = (
-          <div className="contact-item3-last" key={index}>
+          <div className="contact-item3" key={index}>
             <div className="contact-item11">
               <div  className="contact-sub-right-center">{item.title}</div>
             </div>
@@ -221,9 +240,9 @@ class Order extends Component {
     let totalList = []
     this.state.goods_info.forEach((item, index) => {
       let totalItem = null
-      if(this.state.base_info.length === index + 1){
+      if(this.state.goods_info.length === index + 1){
         totalItem = (
-          <div className="contact-item3" key={index}>
+          <div className="contact-item3-last" key={index}>
             <div className="contact-item11">
               <div  className="contact-sub-right-center">{item.title}</div>
             </div>
